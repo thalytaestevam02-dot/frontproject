@@ -1,15 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import Cadastro from '@/components/Cadastro';
+import Gestoria from '@/components/Gestoria';
 
-export default function CadastroPage() {
-  const router = useRouter();
-
-  const handleRedirecionamento = (perfil: 'professor' | 'coordenador') => {
-    // Corrigido: Agora vai para a página do professor primeiro!
-    router.push('Gestoria');
-  };
-
-  return <Cadastro onSelectPerfil={handleRedirecionamento} />;
+export default function GestoriaPage() {
+  return <Gestoria />;
 }

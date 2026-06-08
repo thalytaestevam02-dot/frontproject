@@ -1,0 +1,15 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id        String   @id @default(uuid())
+  ra        String   @unique
+  perfil    String
+  nome      String
+  createdAt DateTime @default(now())
+}

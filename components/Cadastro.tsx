@@ -4,20 +4,46 @@ import React, { useState } from 'react';
 import { GraduationCap, User, UserCheck, LogIn, Sun, Moon } from 'lucide-react';
 
 interface CadastroProps {
-  onSelectPerfil: (perfil: 'professor' | 'coordenador') => void;
+  onSelectPerfil: (dados: { ra: string; perfil: 'professor' | 'coordenador' }) => Promise<void>;
 }
 
 export default function Cadastro({ onSelectPerfil }: CadastroProps) {
   const [perfilSelecionado, setPerfilSelecionado] = useState<'professor' | 'coordenador'>('professor');
   const [ra, setRa] = useState('');
-  const [isDarkMode, setIsDarkMode] = useState(true); // Inicializa no modo escuro conforme seu design original
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [carregando, setCarregando] = useState(false);
 
-  const lidarComCadastro = (e: React.FormEvent) => {
+  const lidarComCadastro = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (ra.trim() !== '') {
-      onSelectPerfil(perfilSelecionado);
-    } else {
+
+    const raDigitado = ra.trim();
+
+    if (!raDigitado) {
       alert('Por favor, informe o seu RA.');
+      return;
+    }
+
+    setCarregando(true);
+
+    try {
+      const resposta = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: raDigitado,
+          perfil: perfilSelecionado.toUpperCase(),
+        }),
+      });
+
+      if (!resposta.ok) {
+        const dados = await resposta.json().catch(() => ({}));
+        alert(dados.mensagem || 'Não foi possível acessar o sistema.');
+        return;
+      }
+
+      await onSelectPerfil({ ra: raDigitado, perfil: perfilSelecionado });
+    } finally {
+      setCarregando(false);
     }
   };
 
@@ -192,9 +218,10 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
             {/* Botão Entrar */}
             <button
               type="submit"
-              className="w-full bg-[#0B5ED7] hover:bg-[#0a53be] text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center justify-center gap-2 shadow-md transition-all active:scale-99 mt-6"
+              disabled={carregando}
+              className="w-full bg-[#0B5ED7] hover:bg-[#0a53be] text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center justify-center gap-2 shadow-md transition-all active:scale-99 mt-6 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Entrar <LogIn size={16} />
+              {carregando ? 'Validando...' : 'Entrar'} <LogIn size={16} />
             </button>
           </form>
 

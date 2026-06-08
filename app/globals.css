@@ -55,7 +55,18 @@
 
 html {
   color-scheme: light !important;
+  font-size: 16px;
 }
+
+body {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.text-xs { font-size: 0.875rem !important; }
+.text-sm { font-size: 0.95rem !important; }
+.text-\[10px\] { font-size: 0.875rem !important; }
+.text-\[11px\] { font-size: 0.875rem !important; }
 
 :root {
   --background: oklch(1 0 0);
@@ -152,4 +163,3 @@ html {
   color: white;
   transform: translateX(5px);
 }
-

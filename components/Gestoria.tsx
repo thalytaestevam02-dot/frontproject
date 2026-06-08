@@ -1,399 +1,260 @@
-"use client";
+'use client'
 
+import React, { useState, useRef } from 'react';
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-export default function GestoriaPage() {
-    const router = useRouter();
-  
-    return (
-    <main className="flex min-h-screen bg-gray-300">
-      {/* Sidebar */}
-        <aside className="w-64 h-[95vh] sticky top-4 ml-4 bg-white shadow-x1 rounded-2xl flex flex-col justify-between">
-  <div>
-    {/* Logo */}
-    <div className="p-6 flex justify-center">
-      <img
-        src="/eniac-logo.png"
-        alt="Logo ENIAC"
-        className="w-40"
-      />
-    </div>
-
-    {/* Navegação da Navbar */}
-    <nav className="no-underline flex flex-col p-4 gap-2">
-      <button className="sidebar-button bg-blue-600 text-white">
-         Dashboard
-      </button>
-
-      <button 
-        onClick={() => router.push("/gestoriaIA")}
-        className="sidebar-button">
-         GestoriaIA
-      </button>
-
-      <button className="sidebar-button"
-        onClick={() => {
-          window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth"
-          });
-        }}
-      >
-        Atividades Recentes
-      </button>
-
-    </nav>
-
-  </div>
- 
-  {/* Parte inferior da Navbar */}
-  <div className="p-4 flex flex-col gap-2">
-
-    <button className="sidebar-button">
-       Configurações
-    </button>
-
-    <button 
-    onClick={() => router.push("/cadastro")}
-    className="sidebar-button text-red-500">
-     Sair
-    </button>
-
-  </div>
-
-</aside>
-
-
-{/* Conteúdo do topo */}
-<section className="flex-1 p-4">
-
-  {/* Topo da página */}
-  <div className="flex items-center justify-between mb-4">
-
-    <div>
-      <h1 className="text-3xl font-bold text-gray-800">
-        Dashboard Gestoria
-      </h1>
-
-      <p className="text-gray-500">
-        Visão geral acadêmica
-      </p>
-    </div>
-
-    {/* Data atual */}
-    <div className="bg-white px-4 py-2 rounded-xl shadow">
-  📅 {new Date().toLocaleDateString("pt-BR")}
-    </div>
-
-  </div>
-
-  {/* Cards do topo */}
-<div className="grid grid-cols-3 gap-4 mb-4">
-
-  <div className="bg-white p-6 rounded-2xl shadow">
-    <p className="text-gray-500 text-sm">
-      Total de Alunos
-    </p>
-
-    <h2 className="text-4xl font-bold text-blue-700 mt-2">
-      12.480
-    </h2>
-  </div>
-
-  <div className="bg-white p-6 rounded-2xl shadow">
-    <p className="text-gray-500 text-sm">
-      Professores
-    </p>
-
-    <h2 className="text-4xl font-bold text-green-600 mt-2">
-      328
-    </h2>
-  </div>
-
-  <div className="bg-white p-6 rounded-2xl shadow">
-    <p className="text-gray-500 text-sm">
-      Matérias
-    </p>
-
-    <h2 className="text-4xl font-bold text-purple-600 mt-2">
-      452
-    </h2>
-  </div>
-    
-</div>
-
-{/* Área principal */}
-<div className="grid grid-cols-3 gap-4 mb-4">
-
-  {/* Quadro de horários do dia*/}
-  <div className="col-span-2 bg-white rounded-2xl shadow p-6">
-
-    <div className="flex items-center justify-between mb-6">
-
-      <h2 className="text-xl font-bold text-gray-800">
-        Quadro de Horários do Dia
-      </h2>
-
-      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-        Operando Normal
-      </span>
-
-    </div>
-
-    {/* Horários */}
-    <div className="flex flex-col gap-5">
-
-      {/* Aula */}
-      <div className="border-l-4 border-blue-500 pl-4">
-
-        <p className="text-sm text-gray-400">
-          08:00
-        </p>
-
-        <h3 className="font-bold text-gray-800">
-          Programação Android
-        </h3>
-
-        <p className="text-gray-500 text-sm">
-          Prof. Lucio Luzetti • Sala 23-B
-        </p>
-
-      </div>
-
-      {/* Aula */}
-      <div className="border-l-4 border-green-500 pl-4">
-
-        <p className="text-sm text-gray-400">
-          10:15
-        </p>
-
-        <h3 className="font-bold text-gray-800">
-          Tecnologia Web
-        </h3>
-
-        <p className="text-gray-500 text-sm">
-          Profª Nelson Luzetti • Sala 22-B
-        </p>
-
-      </div>
-
-      {/* Aula */}
-      <div className="border-l-4 border-orange-500 pl-4">
-
-        <p className="text-sm text-gray-400">
-          12:15
-        </p>
-
-        <h3 className="font-bold text-gray-800">
-          Metodologias Ágeis
-        </h3>
-
-        <p className="text-gray-500 text-sm">
-          Prof. Denilson Caraca • Sala 21-B
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  {/* Painel lateral */}
-  <div className="flex flex-col gap-4">
-
-    {/* Avaliações docentes */}
-    <div className="bg-white rounded-2xl shadow p-6">
-
-      <h2 className="text-xl font-bold text-gray-800 mb-5">
-        Avaliações Docentes
-      </h2>
-
-      <div className="flex flex-col gap-4">
-
-        <div>
-          <div className="flex justify-between text-sm mb-1">
-            <span>Qualidade Didática</span>
-            <span>4.8/5</span>
-          </div>
-
-          <div className="w-full h-3 bg-gray-200 rounded-full">
-            <div className="w-[96%] h-3 bg-blue-500 rounded-full"></div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between text-sm mb-1">
-            <span>Domínio de Conteúdo</span>
-            <span>4.9/5</span>
-          </div>
-
-          <div className="w-full h-3 bg-gray-200 rounded-full">
-            <div className="w-[98%] h-3 bg-green-500 rounded-full"></div>
-          </div>
-        </div>
-
-        <div>
-          <div className="flex justify-between text-sm mb-1">
-            <span>Engajamento</span>
-            <span>4.2/5</span>
-          </div>
-
-          <div className="w-full h-3 bg-gray-200 rounded-full">
-            <div className="w-[84%] h-3 bg-orange-400 rounded-full"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    {/* Destaque */}
-    <div className="bg-blue-600 text-white rounded-2xl shadow p-6">
-
-      <p className="text-sm opacity-80 mb-2">
-        Destaque do Mês
-      </p>
-
-      <h2 className="text-2xl font-bold mb-3">
-        Excelência Acadêmica
-      </h2>
-
-      <p className="text-sm opacity-90 mb-5">
-        A faculdade atingiu o maior índice de aprovação dos últimos anos.
-      </p>
-
-      <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition cursor-pointer">
-        Baixar Relatório
-      </button>
-
-    </div>
-
-  </div>
-
-  
-
-</div>
-
-    {/* Atividades Recentes */}
-<div className="bg-white rounded-2xl shadow p-6">
-
-  {/* Cabeçalho */}
-  <div className="flex items-center justify-between mb-6">
-
-    <div>
-      <h2 className="text-2xl font-bold text-gray-800">
-        Atividades Recentes
-      </h2>
-
-      <p className="text-gray-500 text-sm">
-        Monitoramento administrativo
-      </p>
-    </div>
-
-    <button className="border border-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-100 transition cursor-pointer">
-      Histórico Completo
-    </button>
-
-  </div>
-
-  {/* Tabela */}
-  <div className="overflow-x-auto">
-
-    <table className="w-full">
-
-      <thead>
-
-        <tr className="text-left text-gray-400 text-sm border-b">
-
-          <th className="pb-4">Solicitação</th>
-
-          <th className="pb-4">Departamento</th>
-
-          <th className="pb-4">Data</th>
-
-          <th className="pb-4">Status</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody className="text-gray-700">
-
-        <tr className="border-b hover:bg-gray-50 transition">
-
-          <td className="py-5 font-medium">
-            Aprovação de Nova Verba Lab TI
-          </td>
-
-          <td>
-            Tecnologia da Informação
-          </td>
-
-          <td>
-            Hoje, 09:12
-          </td>
-
-          <td>
-            <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">
-              Pendente
-            </span>
-          </td>
-
-        </tr>
-
-        <tr className="border-b hover:bg-gray-50 transition">
-
-          <td className="py-5 font-medium">
-            Calendário Semestral 2026.2
-          </td>
-
-          <td>
-            Secretaria Acadêmica
-          </td>
-
-          <td>
-            Ontem, 16:45
-          </td>
-
-          <td>
-            <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-              Aprovado
-            </span>
-          </td>
-
-        </tr>
-
-        <tr className="hover:bg-gray-50 transition">
-
-          <td className="py-5 font-medium">
-            Renovação de Convênio Intercâmbio
-          </td>
-
-          <td>
-            Relações Internacionais
-          </td>
-
-          <td>
-            22 Mai, 11:20
-          </td>
-
-          <td>
-            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">
-              Finalizado
-            </span>
-          </td>
-
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
-</section>
-
-    </main>
-  );
+import { 
+  LayoutDashboard, Bot, ArrowDown, LogOut, Sun, Moon, 
+  Search, Bell, Settings, MapPin
+} from 'lucide-react';
+
+interface NavItemProps {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+  textColor?: string;
 }
+
+// ================= COMPONENTE PRINCIPAL =================
+const GestoriaPage = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const router = useRouter();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
+      <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
+        
+        {/* BARRA LATERAL (SIDEBAR) */}
+        <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
+          <div className="flex justify-center h-16 items-center mb-6" style={{ maxWidth: '300px' }}>
+            <Image
+              src={isDarkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
+              alt="Logo ENIAC"
+              width={160}
+              height={50}
+              className="object-contain"
+            />
+          </div>
+          
+          <nav className="flex-1 space-y-1">
+            <NavItem icon={<LayoutDashboard size={18}/>} label="Dashboard" active />
+            <NavItem 
+              icon={<Bot size={18}/>} 
+              label="Gestoria IA" 
+              onClick={() => router.push("/gestoria_ia")} 
+            />
+            <NavItem 
+              icon={<ArrowDown size={18}/>} 
+              label="Fim da página" 
+              onClick={scrollToBottom} 
+            />
+          </nav>
+
+          <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
+            <NavItem icon={<Settings size={18}/>} label="Configurações" />
+            <div 
+              onClick={() => router.push("/cadastro")}
+              className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-950/30 text-red-500 rounded-lg cursor-pointer transition-all w-full"
+            >
+              <LogOut size={18} />
+              <span className="text-sm font-medium">Sair</span>
+            </div>
+          </div>
+        </aside>
+
+        {/* CONTEÚDO PRINCIPAL (MAIN) */}
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          {/* TOPBAR */}
+          <header className="flex justify-between items-center mb-6 py-3 px-4 sticky top-0 z-50 bg-[#f4f6f9]/80 dark:bg-[#0f1115]/80 backdrop-blur-md rounded-xl border border-transparent dark:border-gray-900 gap-4 transition-colors duration-300">
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-bold tracking-tight text-gray-800 dark:text-white shrink-0">
+                Navegação Gestoria
+              </h1>
+            </div>
+            
+            <div className="flex items-center gap-4 flex-nowrap justify-end overflow-x-auto scrollbar-none py-1">
+              {/* Barra de Pesquisa */}
+              <div className="relative w-80 shrink-0">
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Pesquisar registros..." 
+                  className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#1c2128] border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:outline-none focus:border-blue-500 text-gray-800 dark:text-white transition-all placeholder-gray-400"
+                />
+              </div>
+
+              {/* Ações */}
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
+              >
+                {isDarkMode ? <Sun size={17} className="text-yellow-400" /> : <Moon size={17} />}
+              </button>
+
+              <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition-colors relative shrink-0">
+                <Bell size={18}/>
+              </button>
+
+              <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition-colors shrink-0">
+                <Settings size={18}/>
+              </button>
+            </div>
+          </header>
+
+          {/* ÁREA DE CONTEÚDO TOTAL (Rolagem vertical única) */}
+          <div ref={scrollContainerRef} className="flex-1 h-full space-y-6 overflow-y-auto pr-2 pb-4">
+            
+            {/* Título de Boas-vindas e Data */}
+            <div className="flex justify-between items-center mb-2">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Dashboard Gestoria</h1>
+                <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  Visão geral acadêmica
+                </p>
+              </div>
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-white px-4 py-2 rounded-xl font-medium shadow-sm flex items-center gap-2">
+                📅 {new Date().toLocaleDateString("pt-BR")}
+              </div>
+            </div>
+
+            {/* CARDS ESTATÍSTICOS */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total de Alunos</p>
+                <h2 className="text-4xl font-extrabold text-blue-600 mt-2">12.480</h2>
+              </div>
+
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Professores</p>
+                <h2 className="text-4xl font-extrabold text-green-600 mt-2">328</h2>
+              </div>
+
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Matérias</p>
+                <h2 className="text-4xl font-extrabold text-purple-600 mt-2">452</h2>
+              </div>
+            </section>
+
+            {/* QUADRO DE HORÁRIOS */}
+            <section className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm transition-colors duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                  Quadro de Horários do Dia
+                </h2>
+                <span className="bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
+                  Operando Normal
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-5">
+                <div className="border-l-4 border-blue-500 pl-4">
+                  <p className="text-sm text-gray-400">10:00</p>
+                  <h3 className="font-bold text-gray-800 dark:text-white">Reunião Gestoria</h3>
+                  <p className="text-gray-500 dark:text-gray-400">Ecossistema</p>
+                </div>
+
+                <div className="border-l-4 border-green-500 pl-4">
+                  <p className="text-sm text-gray-400">12:15</p>
+                  <h3 className="font-bold text-gray-800 dark:text-white">Palestra de Inovação</h3>
+                  <p className="text-gray-500 dark:text-gray-400">Auditório</p>
+                </div>
+
+                <div className="border-l-4 border-orange-500 pl-4">
+                  <p className="text-sm text-gray-400">18:00</p>
+                  <h3 className="font-bold text-gray-800 dark:text-white">Palestra de Marketing</h3>
+                  <p className="text-gray-500 dark:text-gray-400">Auditório</p>
+                </div>
+              </div>
+            </section>
+
+            {/* CALENDÁRIO EVENTOS */}
+            <section className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm transition-colors duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                    Calendário Eventos
+                  </h2>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Monitoramento administrativo</p>
+                </div>
+                <button className="px-4 py-2 rounded-xl text-sm border font-medium border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 transition">
+                  Histórico Completo
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full table-fixed min-w-[600px] text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-400 dark:text-gray-500">
+                      <th className="pb-4 px-2">Evento</th>
+                      <th className="pb-4 px-2">Local</th>
+                      <th className="pb-4 px-2">Data</th>
+                      <th className="pb-4 px-2">Horário</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-gray-700 dark:text-gray-300">
+                    <tr className="border-b border-gray-100 dark:border-gray-750 hover:bg-gray-50 dark:hover:bg-[#1c2128]/30 transition-colors">
+                      <td className="py-4 px-2 font-semibold">Corpus Christi</td>
+                      <td className="py-4 px-2">Feriado</td>
+                      <td className="py-4 px-2">04/06</td>
+                      <td className="py-4 px-2"><span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs font-semibold">00:00 - 23:59</span></td>
+                    </tr>
+                    <tr className="border-b border-gray-100 dark:border-gray-750 hover:bg-gray-50 dark:hover:bg-[#1c2128]/30 transition-colors">
+                      <td className="py-4 px-2 font-semibold">Feirão do emprego Eniac</td>
+                      <td className="py-4 px-2">Eniac</td>
+                      <td className="py-4 px-2">11/06 até 12/06</td>
+                      <td className="py-4 px-2"><span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs font-semibold">07:00 - 22:00</span></td>
+                    </tr>
+                    <tr className="hover:bg-gray-50 dark:hover:bg-[#1c2128]/30 transition-colors">
+                      <td className="py-4 px-2 font-semibold">Festa Junina do Eniac</td>
+                      <td className="py-4 px-2">Eniac</td>
+                      <td className="py-4 px-2">24/06</td>
+                      <td className="py-4 px-2"><span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs font-semibold">12:00 - 20:00</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+// ================= SUBCOMPONENTES =================
+const NavItem = ({ icon, label, active = false, onClick, textColor }: NavItemProps) => {
+  const baseClasses = "flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all w-full text-left font-medium shadow-sm";
+  
+  if (active) {
+    return (
+      <button onClick={onClick} className={`${baseClasses} bg-blue-600 text-white`}>
+        {icon}
+        {label}
+      </button>
+    );
+  }
+
+  return (
+    <button 
+      onClick={onClick} 
+      className={`flex items-center w-full p-3 rounded-xl text-left font-medium transition hover:bg-gray-100 dark:hover:bg-gray-700 gap-3 ${textColor || 'text-gray-800 dark:text-white'}`}
+    >
+      {icon}
+      {label}
+    </button>
+  );
+};
+
+export default GestoriaPage;
