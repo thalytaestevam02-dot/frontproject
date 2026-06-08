@@ -9,9 +9,6 @@ import {
   Settings, Download, Printer, Loader2, Sparkles
 } from 'lucide-react';
 
-// =========================================================================
-// TIPAGENS (INTERFACES)
-// =========================================================================
 interface Aula {
   materia: string;
   turma: string;
@@ -113,12 +110,12 @@ export default function GeradorGradeIA() {
   };
 
   return (
-    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-[#f4f6f9] text-gray-700'} min-h-screen font-sans p-6 transition-colors duration-300`}>
+    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} min-h-screen font-sans p-4 md:p-6 transition-colors duration-300`}>
       
-      <div className="max-w-350 mx-auto flex gap-6">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 lg:flex-row">
         
         {/* BARRA LATERAL (SIDEBAR) */}
-         <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-[calc(100vh-48px)] sticky top-6">
+         <aside className="w-full lg:w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 lg:h-[calc(100vh-48px)] lg:sticky lg:top-6">
           <div style={{ maxWidth: '300px' }}>
             <Image
               src="/eniac-logo.png"
@@ -135,12 +132,12 @@ export default function GeradorGradeIA() {
           </div>
           
           <nav className="flex-1 space-y-1">
-            <NavItem icon={<User size={18}/>} label="Perfil" active />
+            <Link href="/perfil_professor" className="block w-full">
+              <NavItem icon={<Bot size={18}/>} label="Perfil"/>
+            </Link>
             <NavItem icon={<FileText size={18}/>} label="Minhas Matérias" />
             <NavItem icon={<GraduationCap size={18}/>} label="Avaliação Anual" />
-            <Link href="/gerar_ia_professor" className="block w-full">
-              <NavItem icon={<Bot size={18}/>} label="Assistente IA" />
-            </Link>
+            <NavItem icon={<Bot size={18}/>} label="Assistente IA" active />
           </nav>
 
           <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4 text-[11px]">
@@ -173,7 +170,7 @@ export default function GeradorGradeIA() {
         <main className="flex-1 flex flex-col min-w-0">
           
           {/* HEADER SUPERIOR TRAVADO NO TOPO (STICKY) */}
-          <header className="flex justify-between items-center mb-6 py-3 px-4 sticky top-0 z-50 bg-[#f4f6f9]/80 dark:bg-[#0f1115]/80 backdrop-blur-md rounded-xl border border-transparent dark:border-gray-900 gap-4 transition-colors duration-300">
+          <header className="flex flex-wrap justify-between items-center mb-6 py-3 px-4 sticky top-0 z-50 bg-[#f4f6f9]/80 dark:bg-[#0f1115]/80 backdrop-blur-md rounded-xl border border-transparent dark:border-gray-900 gap-3 transition-colors duration-300">
             <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wide shrink-0 uppercase">
               Gerador de Grade com IA
             </h2>
@@ -229,7 +226,7 @@ export default function GeradorGradeIA() {
 
               {/* TABELA DE HORÁRIOS */}
               <div className="overflow-x-auto w-full">
-                <table className="w-full text-left border-collapse min-w-162.5">
+                <table className="w-full text-left border-collapse min-w-230 lg:min-w-0">
                   <thead>
                     <tr className="text-[10px] uppercase text-gray-500 border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f1115]/40 font-bold tracking-wider">
                       <th className="p-4 w-[15%]">Turno / Horário</th>
@@ -333,9 +330,9 @@ export default function GeradorGradeIA() {
 
               {/* COLUNA DOS CARDS DE STATUS (ALINHADOS À DIREITA EXATAMENTE COMO NA FOTO) */}
               <div className="col-span-12 lg:col-span-4 flex flex-col gap-3 w-full">
-                <StatusCard label="Carga Semestral" value={gradeGerada.carga} sub="/ aula" />
-                <StatusCard label="Turmas Ativas" value={gradeGerada.turmas} />
-                <StatusCard label="Conflitos" value={gradeGerada.conflitos} colorLight="text-green-600" colorDark="text-green-500" />
+                <StatusCard label="Carga Semestral" value={gradeGerada.carga} sub="/ aula" isDarkMode={isDarkMode} />
+                <StatusCard label="Turmas Ativas" value={gradeGerada.turmas} isDarkMode={isDarkMode} />
+                <StatusCard label="Conflitos" value={gradeGerada.conflitos} colorLight="text-green-600" colorDark="text-green-500" isDarkMode={isDarkMode} />
               </div>
 
             </div>
@@ -369,19 +366,19 @@ function NavItem({ icon, label, active = false }: NavItemProps) {
 
 function AulaCard({ materia, turma, local, colorLight, colorDark, isDarkMode }: Aula & { isDarkMode: boolean }) {
   return (
-    <div className={`border-l-4 ${isDarkMode ? colorDark : colorLight} p-2.5 rounded-r-lg shadow-sm transition-transform hover:scale-[1.01]`}>
-      <h4 className={`font-bold text-xs tracking-wide leading-tight ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>{materia}</h4>
-      <p className="text-[10px] text-gray-400 dark:text-gray-400 mt-0.5 font-medium whitespace-nowrap">{turma} • {local}</p>
+    <div className={`border-l-4 ${isDarkMode ? colorDark : colorLight} p-2.5 rounded-r-lg shadow-sm transition-transform hover:scale-[1.01] text-inherit`}>
+      <h4 className="font-bold text-xs tracking-wide leading-tight text-inherit">{materia}</h4>
+      <p className="text-[10px] mt-0.5 font-medium whitespace-nowrap text-inherit opacity-90">{turma} • {local}</p>
     </div>
   );
 }
 
-function StatusCard({ label, value, sub, colorLight = "text-gray-800", colorDark = "text-white" }: StatusCardProps) {
+function StatusCard({ label, value, sub, colorLight = "text-gray-800", colorDark = "text-white", isDarkMode = false }: StatusCardProps & { isDarkMode?: boolean }) {
   return (
     <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 p-4 rounded-xl flex flex-col shadow-sm dark:shadow-none w-full transition-colors duration-300">
       <p className="text-[9px] uppercase font-bold text-gray-400 mb-1 tracking-wider">{label}</p>
       <div className="flex items-baseline gap-1">
-        <span className={`text-xl font-bold tracking-tight dark:${colorDark} ${colorLight}`}>{value}</span>
+        <span className={`text-xl font-bold tracking-tight ${isDarkMode ? colorDark : colorLight}`}>{value}</span>
         {sub && <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold">{sub}</span>}
       </div>
     </div>

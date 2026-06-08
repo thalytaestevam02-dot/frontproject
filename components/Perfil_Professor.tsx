@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from "next/image";
+import Link from "next/link";
 import { 
   User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon, 
   LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle
@@ -40,17 +41,13 @@ interface MySubjectProps {
   code: string;
 }
 
-interface ProfessorDashboardProps {
-  onCliqueGerar?: () => void;
-}
-
 // ================= COMPONENTE PRINCIPAL =================
-const ProfessorDashboard = ({ onCliqueGerar }: ProfessorDashboardProps) => {
+const ProfessorDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
     <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} min-h-screen font-sans p-6 transition-colors duration-300`}>
-      <div className="max-w-350 mx-auto flex gap-6">
+      <div className="max-w-[1400px] mx-auto flex gap-6">
         
         {/* BARRA LATERAL (SIDEBAR) */}
         <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-[calc(100vh-48px)] sticky top-6">
@@ -71,15 +68,11 @@ const ProfessorDashboard = ({ onCliqueGerar }: ProfessorDashboardProps) => {
           
           <nav className="flex-1 space-y-1">
             <NavItem icon={<User size={18}/>} label="Perfil" active />
-            <NavItem icon={<FileText size={18}/>} label="Minhas Matérias" active />
-            <NavItem icon={<GraduationCap size={18}/>} label="Avaliação Anual" active/>
-            <button
-              type="button"
-              onClick={onCliqueGerar}
-              className="block w-full text-left"
-            >
-              <NavItem icon={<Bot size={18}/>} label="Assistente IA" active />
-            </button>
+            <NavItem icon={<FileText size={18}/>} label="Minhas Matérias" />
+            <NavItem icon={<GraduationCap size={18}/>} label="Avaliação Anual" />
+            <Link href="/gerar_ia_professor" className="block w-full">
+              <NavItem icon={<Bot size={18}/>} label="Assistente IA" />
+            </Link>
           </nav>
 
           <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4 text-[11px]">
@@ -240,7 +233,7 @@ const ProfessorDashboard = ({ onCliqueGerar }: ProfessorDashboardProps) => {
 
             {/* COLUNA DA DIREITA (AVALIAÇÃO E NOVOS AVISOS DE DESEMPENHO) */}
             <div className="col-span-4">
-              <section className="bg-white dark:bg-[#161b22] border border-[#0052cc]/20 dark:border-orange-500/30 rounded-xl p-6 shadow-sm dark:shadow-none transition-colors duration-300 flex flex-col h-full sticky top-22 justify-between">
+              <section className="bg-white dark:bg-[#161b22] border border-[#0052cc]/20 dark:border-orange-500/30 rounded-xl p-6 shadow-sm dark:shadow-none transition-colors duration-300 flex flex-col h-full sticky top-[88px] justify-between">
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider mb-6 text-gray-500 dark:text-white">Avaliação Anual</h4>
                   

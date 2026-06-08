@@ -6,9 +6,9 @@ import Cadastro from '@/components/Cadastro';
 export default function CadastroPage() {
   const router = useRouter();
 
-  const handleRedirecionamento = (perfil: 'professor' | 'gestor') => {
+  const handleRedirecionamento = (perfil: 'professor' | 'coordenador') => {
     // Corrigido: Agora vai para a página do professor primeiro!
-    router.push('/perfil_professor'); 
+    router.push('Gestoria');
   };
 
   return <Cadastro onSelectPerfil={handleRedirecionamento} />;

@@ -48,10 +48,10 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
       `}</style>
 
       {/* Luzes Dinâmicas Adaptáveis: Ajustam a opacidade de acordo com o tema para não estourar o contraste */}
-      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-linear-to-br from-blue-600/25 via-cyan-500/15 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
+      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-gradient-to-br from-blue-600/25 via-cyan-500/15 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
         isDarkMode ? 'blur-[100px] md:blur-[140px] opacity-100' : 'blur-[80px] md:blur-[110px] opacity-40'
       }`} />
-      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-linear-to-tl from-indigo-600/20 via-blue-700/10 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
+      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-gradient-to-tl from-indigo-600/20 via-blue-700/10 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
         isDarkMode ? 'blur-[110px] md:blur-[150px] opacity-100' : 'blur-[90px] md:blur-[120px] opacity-40'
       }`} />
       {/* ───────────────────────────────────────── */}
@@ -72,7 +72,7 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
       </div>
 
       {/* Wrapper Responsivo */}
-      <div className="w-full max-w-110 flex flex-col items-center relative z-10 my-auto">
+      <div className="w-full max-w-[440px] flex flex-col items-center relative z-10 my-auto">
         
         {/* Cabeçalho do Portal */}
         <div className="flex flex-col items-center mb-6 md:mb-8 text-center select-none">
