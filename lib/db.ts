@@ -6,8 +6,8 @@ type UsuarioFake = {
 };
 
 const usuariosFake: UsuarioFake[] = [
-  { id: 1, ra: '1234', perfil: 'COORDENADOR', nome: 'Coordenador' },
-  { id: 2, ra: '2024', perfil: 'PROFESSOR', nome: 'Professor Exemplo' },
+  { id: 1, ra: '0204', perfil: 'COORDENADOR', nome: 'Coordenador' },
+  { id: 2, ra: '202600', perfil: 'PROFESSOR', nome: 'Professor Exemplo' },
 ];
 
 export const pool = {

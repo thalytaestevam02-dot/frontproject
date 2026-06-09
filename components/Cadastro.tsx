@@ -1,59 +1,75 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // 👈 Importamos o roteador do Next.js
 import { GraduationCap, User, UserCheck, LogIn, Sun, Moon } from 'lucide-react';
 
 interface CadastroProps {
-  onSelectPerfil: (dados: { ra: string; perfil: 'professor' | 'coordenador' }) => Promise<void>;
+  onSelectPerfil: (perfil: 'professor' | 'coordenador') => void;
 }
 
 export default function Cadastro({ onSelectPerfil }: CadastroProps) {
+  const router = useRouter(); // 👈 Inicializamos o roteador
   const [perfilSelecionado, setPerfilSelecionado] = useState<'professor' | 'coordenador'>('professor');
   const [ra, setRa] = useState('');
+  const [mensagem, setMensagem] = useState(''); 
+  const [loading, setLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [carregando, setCarregando] = useState(false);
 
   const lidarComCadastro = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMensagem('');
 
-    const raDigitado = ra.trim();
-
-    if (!raDigitado) {
-      alert('Por favor, informe o seu RA.');
+    if (ra.trim() === '') {
+      setMensagem('❌ Por favor, informe o seu RA.');
       return;
     }
 
-    setCarregando(true);
+    setLoading(true);
 
     try {
-      const resposta = await fetch('/api/auth', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          email: raDigitado,
+          ra: ra.trim(),
           perfil: perfilSelecionado.toUpperCase(),
         }),
       });
 
-      if (!resposta.ok) {
-        const dados = await resposta.json().catch(() => ({}));
-        alert(dados.mensagem || 'Não foi possível acessar o sistema.');
-        return;
-      }
+      const dados = await response.json();
 
-      await onSelectPerfil({ ra: raDigitado, perfil: perfilSelecionado });
+      if (response.ok) {
+        setMensagem('✨ Autenticado com sucesso! Entrando...');
+        
+        // Redireciona para a página correta dentro da pasta app/ após 1.5 segundos
+        setTimeout(() => {
+          onSelectPerfil(perfilSelecionado);
+          
+          if (perfilSelecionado === 'coordenador') {
+            router.push('/gestoria');
+          } else {
+            router.push('/perfil_professor');
+          }
+        }, 1500);
+      } else {
+        setMensagem(`❌ ${dados.mensagem || 'RA não encontrado.'}`);
+      }
+    } catch (error) {
+      console.error(error);
+      setMensagem('❌ Erro de conexão com o banco.');
     } finally {
-      setCarregando(false);
+      setLoading(false);
     }
   };
 
   return (
-    // CONTAINER PRINCIPAL: Altera dinamicamente entre o azul escuro profundo e um tom claro tecnológico
     <div className={`min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 font-sans relative overflow-hidden selection:bg-blue-400/30 transition-colors duration-500 ${
       isDarkMode ? 'bg-[#030E21]' : 'bg-[#F0F4F8]'
     }`}>
       
-      {/* ─── ANIMAÇÃO DAS ONDAS DE LUZ ─── */}
       <style>{`
         @keyframes moverOndaEsquerda {
           0% { transform: translate(-20%, -20%) rotate(0deg) scale(1); }
@@ -65,24 +81,17 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
           50% { transform: translate(-30vw, -10vh) rotate(-180deg) scale(0.9); }
           100% { transform: translate(20%, 20%) rotate(-360deg) scale(1.2); }
         }
-        .onda-azul-1 {
-          animation: moverOndaEsquerda 22s infinite ease-in-out;
-        }
-        .onda-azul-2 {
-          animation: moverOndaDireita 26s infinite ease-in-out;
-        }
+        .onda-azul-1 { animation: moverOndaEsquerda 22s infinite ease-in-out; }
+        .onda-azul-2 { animation: moverOndaDireita 26s infinite ease-in-out; }
       `}</style>
 
-      {/* Luzes Dinâmicas Adaptáveis: Ajustam a opacidade de acordo com o tema para não estourar o contraste */}
-      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-gradient-to-br from-blue-600/25 via-cyan-500/15 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
+      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-linear-to-br from-blue-600/25 via-cyan-500/15 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
         isDarkMode ? 'blur-[100px] md:blur-[140px] opacity-100' : 'blur-[80px] md:blur-[110px] opacity-40'
       }`} />
-      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-gradient-to-tl from-indigo-600/20 via-blue-700/10 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
+      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-linear-to-tl from-indigo-600/20 via-blue-700/10 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
         isDarkMode ? 'blur-[110px] md:blur-[150px] opacity-100' : 'blur-[90px] md:blur-[120px] opacity-40'
       }`} />
-      {/* ───────────────────────────────────────── */}
 
-      {/* BOTÃO DE ALTERNÂNCIA DE TEMA (Flutuante no Topo Direito) */}
       <div className="absolute top-4 right-4 z-50">
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
@@ -97,10 +106,8 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
         </button>
       </div>
 
-      {/* Wrapper Responsivo */}
-      <div className="w-full max-w-[440px] flex flex-col items-center relative z-10 my-auto">
+      <div className="w-full max-w-110 flex flex-col items-center relative z-10 my-auto">
         
-        {/* Cabeçalho do Portal */}
         <div className="flex flex-col items-center mb-6 md:mb-8 text-center select-none">
           <div className="w-12 h-12 md:w-14 md:h-14 bg-[#0B5ED7] rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 mb-3 transition-all duration-300 hover:scale-105">
             <GraduationCap size={28} className="text-white md:hidden" />
@@ -118,7 +125,6 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
           </p>
         </div>
 
-        {/* Card Principal: Altera cores internas, bordas e sombras dependendo do tema */}
         <div className={`w-full border rounded-2xl p-5 sm:p-7 md:p-8 transition-all duration-500 ${
           isDarkMode 
             ? 'bg-[#0B132B]/90 border-slate-800/60 shadow-2xl shadow-black/60 backdrop-blur-md' 
@@ -138,18 +144,26 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
             </p>
           </div>
 
+          {mensagem && (
+            <div className={`p-3 rounded-xl text-xs font-semibold mb-4 text-center border ${
+              mensagem.includes('sucesso') 
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+            }`}>
+              {mensagem}
+            </div>
+          )}
+
           <form onSubmit={lidarComCadastro} className="space-y-5">
             
-            {/* Seleção de Tipo de Perfil */}
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 Tipo de Perfil
               </label>
               <div className="grid grid-cols-2 gap-3">
-                {/* Botão Professor */}
                 <button
                   type="button"
-                  onClick={() => setPerfilSelecionado('professor')}
+                  onClick={() => { setPerfilSelecionado('professor'); setMensagem(''); }}
                   className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border-2 transition-all gap-1 active:scale-98 ${
                     perfilSelecionado === 'professor'
                       ? 'border-[#0B5ED7] bg-blue-50/10 text-[#0B5ED7]'
@@ -162,10 +176,9 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
                   <span className="text-xs sm:text-sm font-semibold mt-1">Professor</span>
                 </button>
 
-                {/* Botão Coordenador */}
                 <button
                   type="button"
-                  onClick={() => setPerfilSelecionado('coordenador')}
+                  onClick={() => { setPerfilSelecionado('coordenador'); setMensagem(''); }}
                   className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border-2 transition-all gap-1 active:scale-98 ${
                     perfilSelecionado === 'coordenador'
                       ? 'border-[#0B5ED7] bg-blue-50/10 text-[#0B5ED7]'
@@ -180,7 +193,6 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
               </div>
             </div>
 
-            {/* Campo Registro Acadêmico (RA) */}
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                 Registro Acadêmico (RA)
@@ -190,7 +202,8 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
                   type="text"
                   value={ra}
                   onChange={(e) => setRa(e.target.value)}
-                  placeholder="Digite seu RA"
+                  maxLength={6}
+                  placeholder="Digite seu RA (6 números)"
                   className={`w-full border rounded-xl py-3 md:py-3.5 pl-11 pr-4 placeholder-slate-400 outline-none text-sm transition-all ${
                     isDarkMode
                       ? 'bg-[#131E3B] border-slate-800 text-white focus:border-slate-700'
@@ -201,7 +214,6 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
               </div>
             </div>
 
-            {/* Checkbox Lembrar-me */}
             <div className="flex items-center gap-2 pt-1">
               <input
                 type="checkbox"
@@ -215,19 +227,17 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
               </label>
             </div>
 
-            {/* Botão Entrar */}
             <button
               type="submit"
-              disabled={carregando}
-              className="w-full bg-[#0B5ED7] hover:bg-[#0a53be] text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center justify-center gap-2 shadow-md transition-all active:scale-99 mt-6 disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={loading}
+              className="w-full bg-[#0B5ED7] hover:bg-[#0a53be] text-white py-3 md:py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center justify-center gap-2 shadow-md transition-all active:scale-99 mt-6 disabled:opacity-50"
             >
-              {carregando ? 'Validando...' : 'Entrar'} <LogIn size={16} />
+              {loading ? 'Verificando...' : 'Entrar'} <LogIn size={16} />
             </button>
           </form>
 
         </div>
 
-        {/* Links Inferiores */}
         <div className={`flex justify-center gap-6 mt-6 md:mt-8 text-xs font-semibold uppercase tracking-wider select-none transition-colors duration-500 ${
           isDarkMode ? 'text-slate-500' : 'text-slate-400'
         }`}>

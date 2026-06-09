@@ -1,446 +1,368 @@
-"use client";
+'use client';
 
-import {
-  BellIcon,
-  Cog6ToothIcon,
-  MagnifyingGlassIcon,
-  ArrowDownTrayIcon,
-  PrinterIcon,
-  MoonIcon,
-  SunIcon,
-} from "@heroicons/react/24/outline";
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { 
+  LayoutDashboard, Bot, ArrowDown, LogOut, Sun, Moon, 
+  Search, Bell, Settings, Printer, Download
+} from 'lucide-react';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+interface NavItemProps {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+  textColor?: string;
+}
 
+// ================= COMPONENTE PRINCIPAL =================
 export default function GestoriaIAPage() {
-  /* constante do modo escuro e diurno */
-  const [darkMode, setDarkMode] = useState(false);
-
-  /* constante do relógio */
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [horaAtual, setHoraAtual] = useState("");
+  const router = useRouter();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Efeito do Relógio Digital
   useEffect(() => {
     const atualizarHora = () => {
-      const hora = new Date().toLocaleTimeString("pt-BR");
-      setHoraAtual(hora);
+      setHoraAtual(new Date().toLocaleTimeString("pt-BR"));
     };
-
     atualizarHora();
     const intervalo = setInterval(atualizarHora, 1000);
     return () => clearInterval(intervalo);
   }, []);
 
-  const router = useRouter();
+  const scrollToBottom = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
-    <main
-      className={`flex min-h-screen transition-colors duration-300 ${
-        darkMode ? "bg-gray-900" : "bg-gray-300"
-      }`}
-    >
-      {/* Sidebar */}
-      <aside
-        className={`w-64 h-[95vh] sticky top-4 ml-4 rounded-2xl flex flex-col justify-between transition-colors duration-300 ${
-          darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-        }`}
-      >
-        {/* Parte superior */}
-        <div>
-          {/* Logo */}
-          <div className="h-16 flex items-center justify-center">
-            <img
-              src={darkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
+    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
+      <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
+        
+        {/* BARRA LATERAL (SIDEBAR) */}
+        <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl border border-gray-200 dark:border-gray-800 p-5 shrink-0 h-full">
+          <div className="flex justify-center mb-4">
+            <Image
+              src={isDarkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
               alt="Logo ENIAC"
-              className="max-h-12 w-40 object-contain"
+              width={160}
+              height={50}
+              className="object-contain"
             />
           </div>
 
-          {/* Navegação */}
-          <nav className="no-underline flex flex-col p-4 gap-2">
-            <button
-              onClick={() => router.push("/gestoria")}
-              className="sidebar-button"
-            >
-              Dashboard
-            </button>
-
-            <button className="sidebar-button bg-blue-600 text-white">
-              Gestoria IA
-            </button>
-
-            <button
-              className="sidebar-button"
-              onClick={() => {
-                window.scrollTo({
-                  top: document.body.scrollHeight,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              Fim da página
-            </button>
+          <div className="mb-7 text-center">
+            <h1 className="text-2xl font-bold tracking-tight text-[#0047b3] dark:text-white">PORTAL DO GESTOR</h1>
+            <p className="mt-1 text-[11px] text-gray-400 dark:text-blue-400 font-bold uppercase tracking-widest">Ambiente Docente</p>
+          </div>
+          
+          <nav className="flex-1 space-y-1">
+            <NavItem 
+              icon={<LayoutDashboard size={18}/>} 
+              label="Dashboard" 
+              onClick={() => router.push("/gestoria")} 
+            />
+            <NavItem icon={<Bot size={18}/>} label="Gestoria IA" active />
+            <NavItem 
+              icon={<ArrowDown size={18}/>} 
+              label="Fim da página" 
+              onClick={scrollToBottom} 
+            />
           </nav>
-        </div>
 
-        {/* Parte inferior */}
-        <div className="p-4 flex flex-col gap-2">
-          <button className="sidebar-button">Configurações</button>
-          <button
-            onClick={() => router.push("/cadastro")}
-            className="sidebar-button text-red-500"
-          >
-            Sair
-          </button>
-        </div>
-      </aside>
-
-      {/* Conteúdo */}
-      <section className="flex-1 p-4">
-        {/* Topbar */}
-        <header
-          className={`h-20 rounded-2xl shadow-sm px-6 flex items-center justify-between mb-6 transition-colors duration-300 ${
-            darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-          }`}
-        >
-          {/* Lado esquerdo */}
-          <div className="flex items-center gap-6">
-            <div>
-              <h1
-                className={`text-2xl font-bold ${
-                  darkMode ? "text-white" : "text-gray-800"
-                }`}
+          <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4 text-[11px]">
+            <div className="flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-gray-500">
+              <span>⚠️</span> Avisos Gerais
+            </div>
+            <div className="space-y-3">
+              <div>
+                <p className="text-gray-700 dark:text-gray-300 font-semibold">Notas</p>
+                <p className="text-gray-400 dark:text-gray-500 leading-tight">Lançamento até o 5º dia útil.</p>
+              </div>
+              <div>
+                <p className="text-base font-semibold text-gray-700 dark:text-gray-300">Substituição</p>
+                <p className="text-sm text-gray-400 leading-tight dark:text-gray-500">Aviso com 48h de antecedência.</p>
+              </div>
+            </div>
+  
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
+              <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors">
+                <Settings size={16} /> <span className="text-sm font-medium">Configurações</span>
+              </div>
+              <div 
+                onClick={() => router.push("/cadastro")}
+                className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors"
               >
-                Navegação Gestoria
-              </h1>
-            </div>
-
-            {/* Barra de pesquisa */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Pesquisar registros..."
-                className={`w-72 pl-10 pr-4 py-2 rounded-xl border outline-none focus:border-blue-500 ${
-                  darkMode
-                    ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-gray-50 border-gray-300 text-gray-800"
-                }`}
-              />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <MagnifyingGlassIcon className="w-5 h-5" />
-              </span>
+                <LogOut size={16} /> <span className="text-sm font-medium">Sair</span>
+              </div>
             </div>
           </div>
+        </aside>
 
-          <div className="flex items-center gap-5">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="px-1 py-1 bg-gray-500 text-xl cursor-pointer rounded-full"
-            >
-              {darkMode ? (
-                <SunIcon className="w-5 h-5" />
-              ) : (
-                <MoonIcon className="w-5 h-5" />
-              )}
-            </button>
-            <button className="text-xl cursor-pointer">
-              <BellIcon className="w-5 h-5" />
-            </button>
-            <button className="text-xl cursor-pointer">
-              <Cog6ToothIcon className="w-5 h-5" />
-            </button>
-          </div>
-        </header>
-
-        {/* Topo */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="ml-6">
-            <h1
-              className={`text-4xl font-bold ${
-                darkMode ? "text-white" : "text-gray-800"
-              }`}
-            >
-              Gestoria IA
-            </h1>
-            <p
-              className={`mt-1 ${
-                darkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              Central inteligente de gerenciamento acadêmico
-            </p>
-          </div>
-
-          {/* Data atual */}
-          <div
-            className={`px-4 py-2 rounded-xl shadow transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            📅 {new Date().toLocaleDateString("pt-BR")}
-          </div>
-        </div>
-
-        {/* Cards Estatísticos */}
-        <div className="grid grid-cols-4 gap-4">
-          {/* Card 1 */}
-          <div
-            className={`rounded-2xl shadow-md p-6 transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-medium">Fluxo de Alunos</h2>
-              <span className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">
-                AO VIVO
-              </span>
-            </div>
-            <h1 className="text-5xl font-bold mb-2">85%</h1>
-            <p className="text-sm mb-4">Alunos previstos para entrada hoje</p>
-            {/* Barra */}
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div className="bg-blue-500 h-3 rounded-full w-[85%]"></div>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div
-            className={`rounded-2xl shadow-md p-6 transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            <h2 className="font-medium mb-4">Processamento IA</h2>
-            <h1 className="text-4xl font-bold text-green-600 mb-2">Otimizado</h1>
-            <p className="text-sm">Latência: 1.2s</p>
-          </div>
-
-          {/* Card 3 */}
-          <div
-            className={`rounded-2xl shadow-md p-6 transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            <h2 className="font-medium mb-4">Alertas Ativos</h2>
-            <h1 className="text-5xl font-bold text-orange-500">03</h1>
-          </div>
-
-          {/* Card 4 */}
-          <div
-            className={`rounded-2xl shadow-md p-6 transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            <h2 className="font-medium mb-4">Solicitações IA</h2>
-            <h1 className="text-5xl font-bold text-purple-600">124</h1>
-            <p className="text-sm mt-2">Ações efetuadas hoje</p>
-          </div>
-        </div>
-
-        {/* Feed IA (Largura Total) */}
-        <div className="mt-4">
-          <div
-            className={`rounded-2xl shadow-md p-6 transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-            }`}
-          >
-            {/* Cabeçalho */}
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Feed de Atividades IA</h2>
-              <button className="text-blue-600 text-sm font-semibold hover:underline cursor-pointer">
-                Histórico Completo
+        {/* CONTEÚDO PRINCIPAL (MAIN) */}
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          
+          {/* HEADER FIXO NO TOPO */}
+          <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
+            <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
+              Navegação Gestoria
+            </h2>
+            
+            <div className="flex items-center gap-4 flex-nowrap justify-end py-1">
+              {/* Barra de Pesquisa */}
+              <div className="relative w-64 shrink-0">
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Pesquisar registros..." 
+                  className="w-full pl-9 pr-4 py-2 bg-[#e9ecef] dark:bg-[#1c2128] border border-transparent dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:bg-white dark:focus:bg-[#161b22] focus:border-gray-300 dark:focus:border-gray-700 text-gray-700 dark:text-gray-300 transition-all placeholder-gray-400"
+                />
+              </div>
+        
+              {/* Alternador de Tema */}
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
+                title="Alternar Tema"
+              >
+                {isDarkMode ? <Sun size={17} className="text-yellow-500" /> : <Moon size={17} />}
+              </button>
+        
+              {/* Notificações */}
+              <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition-colors relative shrink-0">
+                <Bell size={18}/>
+                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
               </button>
             </div>
+          </header>
 
-            {/* Atividade 1 */}
-            <div className="border-l-4 border-blue-500 bg-gray-300 rounded-xl p-4 mb-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-gray-800">
-                  Prof. Lucio Luzetti informou ausência na aula de hoje
-                </h3>
-                <span className="text-sm text-gray-800">AGORA</span>
+          {/* ÁREA DE CONTEÚDO TOTAL (Rolagem vertical única) */}
+          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto pr-2 pb-6 space-y-6 scrollbar-thin dark:scrollbar-thumb-gray-800 scrollbar-thumb-gray-200">
+            
+            {/* Título de Boas-vindas e Data */}
+            <div className="flex justify-between items-center mb-2">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Gestoria IA</h1>
+                <p className="text-gray-500 dark:text-gray-400 mt-1">
+                  Central inteligente de gerenciamento acadêmico
+                </p>
               </div>
-              <p className="text-gray-500 mt-2">
-                IA notificou automaticamente a turma e sugeriu aula assíncrona.
-              </p>
-              <div className="flex gap-3 mt-4">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition cursor-pointer">
-                  Detalhes
-                </button>
-                <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm hover:bg-red-500 transition cursor-pointer">
-                  Desfazer
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-white px-4 py-2 rounded-xl font-medium shadow-sm flex items-center gap-2">
+                📅 {new Date().toLocaleDateString("pt-BR")}
+              </div>
+            </div>
+
+            {/* CARDS ESTATÍSTICOS */}
+            <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Card 1 */}
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Fluxo de Alunos</p>
+                  <span className="bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 text-xs px-3 py-1 rounded-full font-semibold">
+                    AO VIVO
+                  </span>
+                </div>
+                <h2 className="text-4xl font-extrabold text-gray-800 dark:text-white mb-2">85%</h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Alunos previstos para entrada hoje</p>
+                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2.5">
+                  <div className="bg-blue-500 h-2.5 rounded-full w-[85%]"></div>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Processamento IA</p>
+                <h2 className="text-3xl font-extrabold text-green-600 mt-2">Otimizado</h2>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">Latência: 1.2s</p>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Alertas Ativos</p>
+                <h2 className="text-4xl font-extrabold text-orange-500 mt-2">03</h2>
+                <span className="opacity-0 text-xs">Espaçador</span>
+              </div>
+
+              {/* Card 4 */}
+              <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Solicitações IA</p>
+                <h2 className="text-4xl font-extrabold text-purple-600 mt-2">124</h2>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">Ações efetuadas hoje</p>
+              </div>
+            </section>
+
+            {/* FEED IA */}
+            <section className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm transition-colors duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">Feed de Atividades IA</h2>
+                <button className="text-blue-600 text-sm font-semibold hover:underline">
+                  Histórico Completo
                 </button>
               </div>
-            </div>
 
-            {/* Atividade 2 */}
-            <div className="bg-gray-300 rounded-xl p-4 mb-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-gray-800">
-                  Prof. Marcos Cárfora reagendou aula do dia 26/08 para 28/08
-                </h3>
-                <span className="text-sm text-gray-800">14m</span>
-              </div>
-              <p className="text-gray-500 mt-2">
-                Calendário alterado automaticamente
-              </p>
-            </div>
+              <div className="space-y-4">
+                {/* Atividade 1 */}
+                <div className="border-l-4 border-blue-500 bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-gray-800 dark:text-white text-sm">
+                      Prof. Lucio Luzetti informou ausência na aula de hoje
+                    </h3>
+                    <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">AGORA</span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    IA notificou automaticamente a turma e sugeriu aula assíncrona.
+                  </p>
+                  <div className="flex gap-2 mt-3">
+                    <button className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-blue-700 transition">
+                      Detalhes
+                    </button>
+                    <button className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-red-500 hover:text-white dark:hover:bg-red-600 transition">
+                      Desfazer
+                    </button>
+                  </div>
+                </div>
 
-            {/* Atividade 3 */}
-            <div className="bg-gray-300 rounded-xl p-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-gray-800">
-                  Prof. Lucio Luzetti declarou futura falta na aula do dia 16/10
-                </h3>
-                <span className="text-sm text-gray-800">24h</span>
+                {/* Atividade 2 */}
+                <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-gray-800 dark:text-white text-sm">
+                      Prof. Marcos Cárfora reagendou aula do dia 26/08 para 28/08
+                    </h3>
+                    <span className="text-xs text-gray-400">14m</span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Calendário alterado automaticamente
+                  </p>
+                </div>
+
+                {/* Atividade 3 */}
+                <div className="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-gray-800 dark:text-white text-sm">
+                      Prof. Lucio Luzetti declarou futura falta na aula do dia 16/10
+                    </h3>
+                    <span className="text-xs text-gray-400">24h</span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Calendário alterado automaticamente
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-500 mt-2">
-                Calendário alterado automaticamente
-              </p>
-            </div>
+            </section>
+
+            {/* CONTROLE INTELIGENTE DE GRADE */}
+            <section className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm transition-colors duration-300">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">Controle Inteligente de Grade</h2>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Alterações automáticas sugeridas pela IA</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button className="p-2 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition">
+                    <Printer size={16} />
+                  </button>
+                  <button className="p-2 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl transition">
+                    <Download size={16} />
+                  </button>
+                  <span className="bg-green-100 text-green-700 dark:bg-green-950/50 dark:text-green-400 px-3 py-1 rounded-full text-xs font-semibold">
+                    IA SINCRONIZADA
+                  </span>
+                </div>
+              </div>
+
+              <div className="bg-gray-100 dark:bg-gray-800/40 rounded-2xl p-5">
+                <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm mb-4">
+                  <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">MOTIVO</p>
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">Ausência: Prof. Nelson Luzetti</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">IA detectou conflito e sugeriu realocação automática.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                  <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm border-l-4 border-red-500">
+                    <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">HORÁRIO ORIGINAL</p>
+                    <h4 className="text-xl font-bold text-gray-800 dark:text-white">19:30 - 21:10</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Sala 22-B</p>
+                  </div>
+
+                  <div className="bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-xl p-4 shadow-sm border-l-4 border-blue-500">
+                    <p className="text-[10px] font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wider mb-1">PROPOSTA IA</p>
+                    <h4 className="text-xl font-bold text-blue-700 dark:text-blue-400">20:00 - 21:30</h4>
+                    <p className="text-xs text-blue-600 dark:text-blue-500 mt-1">Aula remota via Teams</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm transition">
+                    ✅ Validar Alteração
+                  </button>
+                  <button className="flex-1 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 py-3 rounded-xl font-semibold text-sm transition">
+                    Ajustar Manualmente
+                  </button>
+                </div>
+              </div>
+
+              {/* Chat da Secretaria IA e Status Inferiores */}
+              <div className="mt-6 space-y-4">
+                <div className="bg-gray-100 dark:bg-gray-800/60 rounded-xl p-2.5 flex items-center gap-3 border border-transparent dark:border-gray-800">
+                  <input
+                    type="text"
+                    placeholder="Pergunte algo à Secretaria IA..."
+                    className="flex-1 bg-transparent outline-none px-3 text-sm text-gray-800 dark:text-white placeholder-gray-400"
+                  />
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-xs font-semibold transition">
+                    Enviar
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                    <p className="text-xs text-gray-400">Solicitações IA hoje</p>
+                    <h3 className="text-xl font-bold text-purple-600 mt-1">124</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                    <p className="text-xs text-gray-400">Processamento IA</p>
+                    <h3 className="text-xl font-bold text-green-600 mt-1">Otimizado</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                    <p className="text-xs text-gray-400">Relatórios</p>
+                    <h3 className="text-xl font-bold text-orange-500 mt-1">02 Pendentes</h3>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
+                    <p className="text-xs text-gray-400">Sincronização</p>
+                    <h3 className="text-xl font-bold text-gray-700 dark:text-white mt-1">{horaAtual || "--:--:--"}</h3>
+                  </div>
+                </div>
+              </div>
+            </section>
+
           </div>
-        </div>
+        </main>
+      </div>
+    </div>
+  );
+}
 
-        {/* Painel IA de Alterações */}
-        <div
-          className={`rounded-2xl shadow-md p-6 mt-4 transition-colors duration-300 ${
-            darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-          }`}
-        >
-          {/* Cabeçalho */}
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-2xl font-bold">
-                Controle Inteligente de Grade
-              </h2>
-              <p
-                className={`mt-1 ${
-                  darkMode ? "text-gray-300" : "text-gray-700"
-                }`}
-              >
-                Alterações automáticas sugeridas pela IA
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button className="px-1 py-1 hover:bg-gray-500 transition cursor-pointer text-xl rounded-full">
-                <PrinterIcon className="w-5 h-5" />
-              </button>
-              <button className="px-1 py-1 hover:bg-gray-500 transition cursor-pointer text-xl rounded-full">
-                <ArrowDownTrayIcon className="w-5 h-5" />
-              </button>
-              <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
-                IA SINCRONIZADA
-              </span>
-            </div>
-          </div>
-
-          {/* Caixa principal */}
-          <div className="bg-gray-300 rounded-2xl p-6">
-            {/* Motivo */}
-            <div className="bg-white rounded-xl p-4 shadow-sm mb-4">
-              <p className="text-sm text-gray-500 mb-2">MOTIVO</p>
-              <h3 className="text-xl font-bold text-gray-800">
-                Ausência: Prof. Nelson Luzetti
-              </h3>
-              <p className="text-gray-500 mt-2">
-                IA detectou conflito e sugeriu realocação automática.
-              </p>
-            </div>
-
-            {/* Horários */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {/* Original */}
-              <div className="bg-white rounded-xl p-5 shadow-sm border-l-4 border-red-400">
-                <p className="text-sm text-gray-500 mb-2">HORÁRIO ORIGINAL</p>
-                <h3 className="text-2xl font-bold text-gray-800">
-                  19:30 - 21:10
-                </h3>
-                <p className="text-gray-500 mt-2">Sala 22-B</p>
-              </div>
-
-              {/* IA */}
-              <div className="bg-blue-50 rounded-xl p-5 shadow-sm border-l-4 border-blue-500">
-                <p className="text-sm text-blue-500 mb-2">PROPOSTA IA</p>
-                <h3 className="text-2xl font-bold text-blue-700">
-                  20:00 - 21:30
-                </h3>
-                <p className="text-blue-500 mt-2">Aula remota via Teams</p>
-              </div>
-            </div>
-
-            {/* Botões */}
-            <div className="flex gap-4">
-              <button className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-xl font-semibold cursor-pointer">
-                ✅ Validar Alteração
-              </button>
-              <button className="flex-1 bg-white hover:bg-gray-200 transition text-gray-700 py-4 rounded-xl font-semibold border cursor-pointer">
-                Ajustar Manualmente
-              </button>
-            </div>
-          </div>
-
-          {/* Barra Inferior IA */}
-          <div className="mt-8 flex flex-col gap-4">
-            {/* Campo chat IA */}
-            <div className="bg-gray-300 rounded-3xl shadow-md p-3 flex items-center gap-3">
-              <input
-                type="text"
-                placeholder="Pergunte algo à Secretaria IA..."
-                className="flex-1 bg-transparent outline-none px-3 text-gray-900"
-              />
-              <button className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white px-5 py-2 rounded-2xl font-semibold cursor-pointer">
-                Enviar
-              </button>
-            </div>
-
-            {/* Cards inferiores */}
-            <div className="grid grid-cols-4 gap-4">
-              {/* Rede */}
-              <div
-                className={`rounded-3xl shadow-md p-4 transition-colors duration-300 ${
-                  darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
-                }`}
-              >
-                <p className="text-sm">Solicitações IA hoje</p>
-                <h3 className="text-xl font-bold text-purple-600 mt-1">124</h3>
-              </div>
-
-              {/* Energia */}
-              <div
-                className={`rounded-3xl shadow-md p-4 transition-colors duration-300 ${
-                  darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
-                }`}
-              >
-                <p className="text-sm">Processamento IA</p>
-                <h3 className="text-xl font-bold text-green-600 mt-1">
-                  Otimizado
-                </h3>
-              </div>
-
-              {/* Relatórios */}
-              <div
-                className={`rounded-3xl shadow-md p-4 transition-colors duration-300 ${
-                  darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
-                }`}
-              >
-                <p className="text-sm">RELATÓRIOS</p>
-                <h3 className="text-xl font-bold text-orange-500 mt-1">
-                  02 Pendentes
-                </h3>
-              </div>
-
-              {/* Relógio */}
-              <div
-                className={`rounded-3xl shadow-md p-4 transition-colors duration-300 ${
-                  darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
-                }`}
-              >
-                <p className="text-sm">SINCRONIZAÇÃO</p>
-                <h3 className="text-xl font-bold mt-1">{horaAtual}</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+// ================= SUBCOMPONENTES =================
+function NavItem({ icon, label, active = false, onClick, textColor }: NavItemProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex w-full items-center gap-3 rounded-lg px-4 py-2.5 transition-all text-left ${
+        active 
+          ? 'bg-blue-600 font-semibold text-white shadow-sm' 
+          : `text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 ${textColor || ''}`
+      }`}
+    >
+      {icon}
+      <span className="text-sm font-medium">{label}</span>
+    </button>
   );
 }

@@ -39,20 +39,20 @@ interface MySubjectProps {
 const ProfessorDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   return (
-    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
-      <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
+  <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
+  <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
         
         {/* BARRA LATERAL (SIDEBAR) */}
-       <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
-          <div className="flex justify-center" style={{ maxWidth: '300px' }}>
-            <Image
-              src="/eniac-logo.png"
-              alt="Logo ENIAC"
-              width={160}
-              height={50}
-              className="object-contain"
-            />
-          </div>
+    <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
+      <div className="flex justify-center" style={{ maxWidth: '300px' }}>
+         <Image
+          src={isDarkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
+          alt="Logo ENIAC"
+          width={160}
+          height={50}
+          className="object-contain"
+                     />
+     </div>
 
           <div className="mt-4 mb-7 text-center">
             <h1 className="text-2xl bg-center font-bold tracking-tight text-[#0047b3] dark:text-white">PORTAL DO PROFESSOR</h1>
