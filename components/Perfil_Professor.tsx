@@ -44,12 +44,13 @@ const ProfessorDashboard = () => {
 
         {/* BARRA LATERAL (SIDEBAR) */}
         <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
-          <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full mb-1">
             <Image
               src="/eniac-logo.png"
               alt="Logo ENIAC"
               width={160}
               height={50}
+              className={isDarkMode ? "brightness-0 invert" : ""}
             />
           </div>
 
@@ -149,7 +150,7 @@ const ProfessorDashboard = () => {
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Dr. Lucio</h3>
+                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Dr. Lucio Luzzeti</h3>
                       {/* Teste pra ver se o Push/Pull funcionou !!!!!!!!!!!!!!!! */}
                       <p className="mt-0.5 mb-3 flex items-center gap-1 text-sm font-bold text-[#0052cc] dark:text-blue-400">
                         🔷 Coordenador de Design Digital & UX

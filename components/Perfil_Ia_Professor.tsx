@@ -138,12 +138,13 @@ export default function GeradorGradeIA() {
               alt="Logo ENIAC"
               width={160}
               height={50}
+              className={isDarkMode ? "brightness-0 invert" : ""}
             />
           </div>
 
           <div className="mb-7 text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-[#0047b3] dark:text-white">PORTAL DO PROFESSOR</h1>
-            <p className="mt-1 text-[11px] text-gray-400 dark:text-blue-400 font-bold uppercase tracking-widest">Ambiente Docente</p>
+            <h1 className="text-2xl font-bold tracking-tight text-[#0047b3] dark:text-[#0c6cfb]">PORTAL DO PROFESSOR</h1>
+            <p className="mt-1 text-[11px] text-gray-500 dark:text-white font-bold uppercase tracking-widest">Ambiente Docente</p>
           </div>
 
           <nav className="flex-1 space-y-1">
