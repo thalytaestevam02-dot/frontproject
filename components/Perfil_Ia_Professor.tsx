@@ -96,16 +96,16 @@ export default function GeradorGradeIA() {
       },
       noite1: {
         segunda: null,
-        terca: { materia: 'Inteligência Artificial', turma: 'Turma B', local: 'Prédio 2', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-amber-600 bg-amber-600/10 text-amber-400' },
+        terca: { materia: 'Inteligência Artificial', turma: 'Turma B', local: 'Prédio 2', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-pink-500 bg-pink-600/10 text-pink-700' },
         quarta: null,
-        quinta: { materia: 'Inteligência Artificial', turma: 'Turma B', local: 'Prédio 2', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-amber-600 bg-amber-600/10 text-amber-400' },
+        quinta: { materia: 'Inteligência Artificial', turma: 'Turma B', local: 'Prédio 2', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-pink-500 bg-pink-600/10 text-pink-700' },
         sexta: null,
       },
       noite2: {
         segunda: { materia: 'Orientação TCC', turma: 'Vários', local: 'Remoto', colorLight: 'border-blue-400 bg-blue-50 text-[#0b5ed7]', colorDark: 'border-cyan-600 bg-cyan-600/10 text-cyan-400' },
-        terca: { materia: 'Lab de IA', turma: 'Turma B', local: 'Lab 4', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-orange-600 bg-orange-600/10 text-orange-400' },
+        terca: { materia: 'Lab de IA', turma: 'Turma B', local: 'Lab 4', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-pink-500 bg-pink-600/10 text-pink-700' },
         quarta: null,
-        quinta: { materia: 'Lab de IA', turma: 'Turma B', local: 'Lab 4', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-orange-600 bg-orange-600/10 text-orange-400' },
+        quinta: { materia: 'Lab de IA', turma: 'Turma B', local: 'Lab 4', colorLight: 'border-pink-500 bg-pink-50 text-pink-700', colorDark: 'border-pink-500 bg-pink-600/10 text-pink-700' },
         sexta: null,
       },
     },
@@ -129,31 +129,30 @@ export default function GeradorGradeIA() {
   return (
     <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
       <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
-        
+
         {/* BARRA LATERAL (SIDEBAR) */}
-        <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl border border-gray-200 dark:border-gray-800 p-5 shrink-0 h-full">
-          <div className="flex justify-center mb-4">
-             <Image
-              src={isDarkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
+        <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
+          <div className="flex justify-center w-full mb-5">
+            <Image
+              src="/eniac-logo.png"
               alt="Logo ENIAC"
               width={160}
               height={50}
-              className="object-contain"
-                                />
-                </div>
+            />
+          </div>
 
           <div className="mb-7 text-center">
             <h1 className="text-2xl font-bold tracking-tight text-[#0047b3] dark:text-white">PORTAL DO PROFESSOR</h1>
             <p className="mt-1 text-[11px] text-gray-400 dark:text-blue-400 font-bold uppercase tracking-widest">Ambiente Docente</p>
           </div>
-          
+
           <nav className="flex-1 space-y-1">
             <Link href="/perfil_professor" className="block w-full">
-              <NavItem icon={<User size={18}/>} label="Perfil" />
+              <NavItem icon={<User size={18} />} label="Perfil" />
             </Link>
-            <NavItem icon={<FileText size={18}/>} label="Minhas Matérias" />
-            <NavItem icon={<GraduationCap size={18}/>} label="Avaliação Anual" />
-            <NavItem icon={<Bot size={18}/>} label="Assistente IA" active />
+            <NavItem icon={<FileText size={18} />} label="Minhas Matérias" />
+            <NavItem icon={<GraduationCap size={18} />} label="Avaliação Anual" />
+            <NavItem icon={<Bot size={18} />} label="Assistente IA" active />
           </nav>
 
           <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4 text-[11px]">
@@ -170,7 +169,7 @@ export default function GeradorGradeIA() {
                 <p className="text-sm text-gray-400 leading-tight dark:text-gray-500">Aviso com 48h de antecedência.</p>
               </div>
             </div>
-  
+
             <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
               <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors">
                 <Headphones size={16} /> <span className="text-sm font-medium">Suporte</span>
@@ -184,39 +183,39 @@ export default function GeradorGradeIA() {
 
         {/* ÁREA PRINCIPAL CONTAINER */}
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          
+
           {/* HEADER FIXO NO TOPO */}
           <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
             <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
               Assistente IA
             </h2>
-            
+
             <div className="flex items-center gap-4 flex-nowrap justify-end py-1">
               {/* Barra de Pesquisa */}
               <div className="relative w-64 shrink-0">
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <input 
-                  type="text" 
-                  placeholder="Buscar no portal..." 
+                <input
+                  type="text"
+                  placeholder="Buscar no portal..."
                   className="w-full pl-9 pr-4 py-2 bg-[#e9ecef] dark:bg-[#1c2128] border border-transparent dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:bg-white dark:focus:bg-[#161b22] focus:border-gray-300 dark:focus:border-gray-700 text-gray-700 dark:text-gray-300 transition-all placeholder-gray-400"
                 />
               </div>
-        
+
               {/* Alternador de Tema */}
-              <button 
+              <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
                 title="Alternar Tema"
               >
                 {isDarkMode ? <Sun size={17} className="text-yellow-500" /> : <Moon size={17} />}
               </button>
-        
+
               {/* Notificações */}
               <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition-colors relative shrink-0">
-                <Bell size={18}/>
+                <Bell size={18} />
                 <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
               </button>
-              
+
               {/* Avatar */}
               <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0">
                 <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
@@ -234,8 +233,8 @@ export default function GeradorGradeIA() {
             {/* TABELA DE GRADE HORÁRIA (OCUPA 100% DA LARGURA) */}
             <section className="w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-colors duration-300 dark:border-gray-800 dark:bg-[#161b22]">
               <div className="flex items-center justify-between border-b border-gray-200 bg-gray-50/50 p-4 dark:border-gray-800 dark:bg-[#24292f]/20">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-orange-400">
-                  <Calendar size={16} className="text-blue-600 dark:text-orange-500" /> Grade Horária Proposta
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-200">
+                  <Calendar size={16} className="text-blue-600 dark:text-blue-500" /> Grade Horária Proposta
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="rounded-lg bg-[#0B5ED7] px-4 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-blue-700">Publicar</button>
@@ -291,7 +290,7 @@ export default function GeradorGradeIA() {
 
             {/* BLOCO INFERIOR: INPUT IA + STATUS CARDS */}
             <div className="grid w-full grid-cols-12 items-start gap-6">
-              
+
               {/* SEÇÃO DO PROMPT DA IA (70% DA LARGURA INFERIOR) */}
               <section className="col-span-12 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-gray-800 dark:bg-[#161b22] lg:col-span-8">
                 <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-white">🤖 Detalhes de Entrada</div>

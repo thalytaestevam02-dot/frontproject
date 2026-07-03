@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon, 
+import {
+  User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon,
   LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle
 } from 'lucide-react';
 interface NavItemProps {
@@ -39,32 +39,31 @@ interface MySubjectProps {
 const ProfessorDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   return (
-  <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
-  <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
-        
+    <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
+      <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
+
         {/* BARRA LATERAL (SIDEBAR) */}
-    <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
-      <div className="flex justify-center" style={{ maxWidth: '300px' }}>
-         <Image
-          src={isDarkMode ? "/eniac-logo-branca.png" : "/eniac-logo.png"}
-          alt="Logo ENIAC"
-          width={160}
-          height={50}
-          className="object-contain"
-                     />
-     </div>
+        <aside className="w-64 flex flex-col bg-white dark:bg-[#161b22] rounded-xl shadow-sm dark:shadow-none border border-gray-200 dark:border-gray-800 p-5 shrink-0 transition-colors duration-300 h-full lg:sticky lg:top-6">
+          <div className="flex justify-center w-full">
+            <Image
+              src="/eniac-logo.png"
+              alt="Logo ENIAC"
+              width={160}
+              height={50}
+            />
+          </div>
 
           <div className="mt-4 mb-7 text-center">
-            <h1 className="text-2xl bg-center font-bold tracking-tight text-[#0047b3] dark:text-white">PORTAL DO PROFESSOR</h1>
-            <p className="mt-1 text-[11px] text-gray-400 dark:text-blue-400 font-bold uppercase tracking-widest">Ambiente Docente</p>
+            <h1 className="text-2xl bg-center font-bold tracking-tight text-[#0047b3] dark:text-[#0c6cfb]">PORTAL DO PROFESSOR</h1>
+            <p className="mt-1 text-[11px] text-gray-500 dark:text-white font-bold uppercase tracking-widest">Ambiente Docente</p>
           </div>
-          
+
           <nav className="flex-1 space-y-1">
-            <NavItem icon={<User size={18}/>} label="Perfil" active />
-            <NavItem icon={<FileText size={18}/>} label="Minhas Matérias" />
-            <NavItem icon={<GraduationCap size={18}/>} label="Avaliação Anual" />
+            <NavItem icon={<User size={18} />} label="Perfil" active />
+            <NavItem icon={<FileText size={18} />} label="Minhas Matérias" />
+            <NavItem icon={<GraduationCap size={18} />} label="Avaliação Anual" />
             <Link href="/ia_professor" className="block w-full">
-              <NavItem icon={<Bot size={18}/>} label="Assistente IA" />
+              <NavItem icon={<Bot size={18} />} label="Assistente IA" />
             </Link>
           </nav>
 
@@ -82,7 +81,7 @@ const ProfessorDashboard = () => {
                 <p className="text-sm text-gray-400 leading-tight dark:text-gray-500">Aviso com 48h de antecedência.</p>
               </div>
             </div>
-  
+
             <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
               <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors">
                 <Headphones size={16} /> <span className="text-sm font-medium">Suporte</span>
@@ -96,26 +95,26 @@ const ProfessorDashboard = () => {
 
         {/* CONTEÚDO PRINCIPAL (MAIN) */}
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-          <header className="flex justify-between items-center mb-6 py-3 px-4 sticky top-0 z-50 bg-[#f4f6f9]/80 dark:bg-[#0f1115]/80 backdrop-blur-md rounded-xl border border-transparent dark:border-gray-900 gap-4 transition-colors duration-300">
-            <h2 className="text-xl font-semibold tracking-wide text-gray-500 dark:text-gray-400 shrink-0">
+          <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
+            <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
               Perfil do Professor
             </h2>
-            
+
             {/* Container da Direita com flex-nowrap impede quebras */}
             <div className="flex items-center gap-4 flex-nowrap justify-end overflow-x-auto scrollbar-none py-1">
-              
+
               {/* Barra de Pesquisa */}
               <div className="relative w-64 shrink-0">
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <input 
-                  type="text" 
-                  placeholder="Buscar no portal..." 
+                <input
+                  type="text"
+                  placeholder="Buscar no portal..."
                   className="w-full pl-9 pr-4 py-2 bg-[#e9ecef] dark:bg-[#1c2128] border border-transparent dark:border-gray-800 rounded-lg text-sm focus:outline-none focus:bg-white dark:focus:bg-[#161b22] focus:border-gray-300 dark:focus:border-gray-700 text-gray-700 dark:text-gray-300 transition-all placeholder-gray-400"
                 />
               </div>
 
               {/* Alternador de Tema */}
-              <button 
+              <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
                 title="Alternar Tema"
@@ -125,10 +124,10 @@ const ProfessorDashboard = () => {
 
               {/* Notificações */}
               <button className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition-colors relative shrink-0">
-                <Bell size={18}/>
+                <Bell size={18} />
                 <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
               </button>
-              
+
               {/* Avatar */}
               <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0">
                 <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
@@ -138,10 +137,10 @@ const ProfessorDashboard = () => {
 
           {/* GRID DE CONTEÚDO */}
           <div className="grid h-full min-h-0 flex-1 grid-cols-12 gap-6 overflow-hidden">
-            
+
             {/* COLUNA DA ESQUERDA */}
             <div className="col-span-8 h-full space-y-6 overflow-y-auto pr-2 pb-4">
-              
+
               {/* CARD DE PERFIL */}
               <section className="bg-white dark:bg-[#161b22] border border-gray-200/80 dark:border-gray-800 rounded-xl p-6 flex gap-6 shadow-sm dark:shadow-none transition-colors duration-300">
                 <div className="w-24 h-24 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shrink-0">
@@ -150,10 +149,10 @@ const ProfessorDashboard = () => {
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Dr. Lucio</h3> 
-                                                                              {/* Teste pra ver se o Push/Pull funcionou !!!!!!!!!!!!!!!! */}
+                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Dr. Lucio</h3>
+                      {/* Teste pra ver se o Push/Pull funcionou !!!!!!!!!!!!!!!! */}
                       <p className="mt-0.5 mb-3 flex items-center gap-1 text-sm font-bold text-[#0052cc] dark:text-blue-400">
-                         🔷 Coordenador de Design Digital & UX
+                        🔷 Coordenador de Design Digital & UX
                       </p>
                     </div>
                     <div className="w-8 h-8 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-300 dark:text-gray-600 text-sm">🛡️</div>
@@ -162,7 +161,7 @@ const ProfessorDashboard = () => {
                     Doutor em Interação Humano-Computador com mais de 15 anos de experiência em consultoria para grandes corporações. Lidera o núcleo de Design de Interface do Portal ENIAC.
                   </p>
                   <div className="flex gap-2">
-                    <span className="rounded-full border border-amber-100 bg-amber-50 px-3 py-1 text-[12px] font-semibold text-amber-700 dark:border-gray-700 dark:bg-[#2d333b] dark:text-amber-400">🎓 Líder Acadêmico</span>
+                    <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[12px] font-semibold text-blue-700 dark:border-gray-700 dark:bg-[#2d333b] dark:text-gray-300">🎓 Líder Acadêmico</span>
                     <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[12px] font-semibold text-blue-700 dark:border-gray-700 dark:bg-[#2d333b] dark:text-gray-300">👥 342 Alunos</span>
                   </div>
                 </div>
@@ -200,9 +199,9 @@ const ProfessorDashboard = () => {
                   <SubjectCard title="Design de Interface II" quantity={15} status="Urgent" date="25/10" />
                   <SubjectCard title="Sistemas de Design" quantity={8} status="Soon" date="28/10" />
                   <SubjectCard title="UX Research" quantity={4} status="Regular" date="01/11" />
-                  
+
                   <div className="border border-gray-200 dark:border-gray-800 rounded-xl flex flex-col items-center justify-center p-6 bg-gray-50/50 dark:bg-[#1c2128]/20 hover:bg-gray-100 dark:hover:bg-gray-800/50 cursor-pointer transition-all group">
-                    <Plus className="text-gray-400 group-hover:text-[#0052cc] dark:group-hover:text-blue-500 transition-colors" size={24}/>
+                    <Plus className="text-gray-400 group-hover:text-[#0052cc] dark:group-hover:text-blue-500 transition-colors" size={24} />
                     <span className="mt-2 text-sm font-bold uppercase tracking-wider text-gray-400">Ver Mais Matérias</span>
                   </div>
                 </div>
@@ -226,14 +225,14 @@ const ProfessorDashboard = () => {
             </div>
 
             {/* COLUNA DA DIREITA (AVALIAÇÃO E NOVOS AVISOS DE DESEMPENHO) */}
-           <div className="col-span-4 h-full">
-  <section className="bg-white dark:bg-[#161b22] border border-[#0052cc]/20 dark:border-orange-500/30 rounded-xl p-6 shadow-sm dark:shadow-none transition-colors duration-300 flex flex-col h-full justify-between">
-    {/* O conteúdo interno permanece exatamente igual */}
-    <div>
-      <h4 className="mb-6 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-white">Avaliação Anual</h4>
+            <div className="col-span-4 h-full">
+              <section className="bg-white dark:bg-[#161b22] border border-[#0052cc]/20 rounded-xl p-6 shadow-sm dark:shadow-none transition-colors duration-300 flex flex-col h-full justify-between">
+                {/* O conteúdo interno permanece exatamente igual */}
+                <div>
+                  <h4 className="mb-6 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-white">Avaliação Anual</h4>
                   <div className="flex justify-center mb-6">
-                    <div className="relative w-28 h-28 flex items-center justify-center border-[6px] border-gray-100 dark:border-orange-500/20 rounded-full">
-                      <div className="absolute inset-0 border-[6px] border-[#0052cc] dark:border-orange-500 rounded-full border-t-transparent -rotate-45"></div>
+                    <div className="relative w-28 h-28 flex items-center justify-center border-[6px] border-gray-300 dark:border-[#0052cc]/20 rounded-full">
+                      <div className="absolute inset-0 border-[6px] border-[#0052cc] rounded-full border-t-transparent -rotate-45"></div>
                       <div className="text-center">
                         <span className="text-2xl font-black text-gray-800 dark:text-white">4.8</span>
                         <p className="px-3 text-[10px] font-bold uppercase tracking-tighter text-gray-400">Nota Média</p>
@@ -243,7 +242,7 @@ const ProfessorDashboard = () => {
                   {/* COLUNA DA DIREITA (AVALIAÇÃO E NOVOS AVISOS DE DESEMPENHO) */}
 
                   <div className="space-y-4 mb-6">
-                    <MetricBar label="Pontualidade"  value={95} />
+                    <MetricBar label="Pontualidade" value={95} />
                     <MetricBar label="Clareza Didática" value={88} />
                     <MetricBar label="Engajamento" value={92} />
                   </div>
@@ -254,7 +253,7 @@ const ProfessorDashboard = () => {
                     <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-gray-400">Destaque de Feedback</span>
                     <div className="relative rounded-lg border border-gray-100 bg-gray-50 p-3 text-xs italic leading-relaxed text-gray-500 dark:border-gray-700 dark:bg-[#2d333b]/50 dark:text-gray-400">
                       <span className="absolute top-1 left-2 text-xl font-serif text-blue-200 dark:text-gray-700 leading-none">“</span>
-                      <p className="pl-4">O Prof. Ricardo consegue simplificar conceitos complexos de design system de forma magistral.</p>
+                      <p className="pl-4">O Prof. Lucio consegue simplificar conceitos complexos de design system de forma magistral.</p>
                     </div>
                   </div>
                 </div>
@@ -283,7 +282,7 @@ const MySubject = ({ name, studentsCount, progress, code }: MySubjectProps) => (
         <span className="text-sm font-black">{studentsCount}</span>
       </div>
     </div>
-    
+
     <div className="mt-4">
       <div className="mb-1 flex justify-between text-sm text-gray-400 font-medium">
         <span>Aulas ministradas</span>
@@ -319,11 +318,10 @@ const ClassSchedule = ({ subject, time, room, type }: ClassScheduleProps) => (
 
 // ================= SUBCOMPONENTES AUXILIARES OTIMIZADOS =================
 const NavItem = ({ icon, label, active = false }: NavItemProps) => (
-  <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg cursor-pointer transition-all w-full ${
-    active 
-      ? 'bg-blue-50 dark:bg-blue-500/10 text-[#0052cc] dark:text-blue-400 font-semibold' 
+  <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg cursor-pointer transition-all w-full ${active
+      ? 'bg-blue-50 dark:bg-blue-500/10 text-[#0052cc] dark:text-blue-400 font-semibold'
       : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'
-  }`}>
+    }`}>
     {icon}
     <span className="text-sm font-medium">{label}</span>
   </div>
@@ -366,8 +364,8 @@ const MetricBar = ({ label, value }: MetricBarProps) => (
       <span className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-tight">{label}</span>
       <span className="text-[10px] text-gray-700 dark:text-white font-black">{value}%</span>
     </div>
-    <div className="h-1.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-      <div className="h-full bg-[#0052cc] dark:bg-orange-400 rounded-full" style={{ width: `${value}%` }}></div>
+    <div className="h-1.5 w-full bg-gray-300 dark:bg-gray-800 rounded-full overflow-hidden">
+      <div className="h-full bg-[#0052cc] dark:border-[#0052cc]/20 rounded-full" style={{ width: `${value}%` }}></div>
     </div>
   </div>
 );
