@@ -98,7 +98,7 @@ const ProfessorDashboard = () => {
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
             <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
-             pr. Lucio Luzzeti
+             professor. Lucio Luzzeti
             </h2>
 
             {/* Container da Direita com flex-nowrap impede quebras */}
@@ -117,7 +117,7 @@ const ProfessorDashboard = () => {
               {/* Alternador de Tema */}
               <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
-                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
+                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors shrink-0"
                 title="Alternar Tema"
               >
                 {isDarkMode ? <Sun size={17} className="text-yellow-500" /> : <Moon size={17} />}

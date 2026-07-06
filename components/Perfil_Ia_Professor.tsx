@@ -205,7 +205,7 @@ export default function GeradorGradeIA() {
               {/* Alternador de Tema */}
               <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
-                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shrink-0"
+                className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors shrink-0"
                 title="Alternar Tema"
               >
                 {isDarkMode ? <Sun size={17} className="text-yellow-500" /> : <Moon size={17} />}
@@ -239,8 +239,8 @@ export default function GeradorGradeIA() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="rounded-lg bg-[#0B5ED7] px-4 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-blue-700">Publicar</button>
-                  <button className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-white dark:hover:bg-gray-800"><Download size={14} /></button>
-                  <button className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-white dark:hover:bg-gray-800"><Printer size={14} /></button>
+                  <button className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-600 hover:text-white dark:hover:bg-gray-800 dark:hover:text-gray-100"><Download size={14} /></button>
+                  <button className="rounded-md p-2 text-gray-400 transition-colors hover:bg-gray-600 hover:text-white dark:hover:bg-gray-800 dark:hover:text-gray-100"><Printer size={14} /></button>
                 </div>
               </div>
 
