@@ -1,6 +1,7 @@
 ﻿'use client';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import { useThemeStorage } from "../lib/useThemeStorage";
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -80,7 +81,7 @@ interface NavItemProps {
 export default function GeradorGradeIA() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode, toggleTheme } = useThemeStorage();
 
   const [gradeGerada, setGradeGerada] = useState<GradeSemanal>({
     carga: '24h',
@@ -204,7 +205,7 @@ export default function GeradorGradeIA() {
 
               {/* Alternador de Tema */}
               <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
+                onClick={toggleTheme}
                 className="p-2 bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors shrink-0"
                 title="Alternar Tema"
               >

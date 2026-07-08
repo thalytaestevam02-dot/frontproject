@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useThemeStorage } from "../lib/useThemeStorage";
 import { useRouter } from 'next/navigation'; // 👈 Importamos o roteador do Next.js
 import { GraduationCap, User, UserCheck, LogIn, Sun, Moon } from 'lucide-react';
 
@@ -14,7 +15,7 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
   const [ra, setRa] = useState('');
   const [mensagem, setMensagem] = useState(''); 
   const [loading, setLoading] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const { isDarkMode, toggleTheme } = useThemeStorage();
 
   const lidarComCadastro = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +95,7 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
 
       <div className="absolute top-4 right-4 z-50">
         <button
-          onClick={() => setIsDarkMode(!isDarkMode)}
+          onClick={toggleTheme}
           className={`p-2.5 rounded-xl border transition-all duration-300 flex items-center justify-center shadow-sm active:scale-95 ${
             isDarkMode 
               ? 'bg-[#0B1528] border-slate-800 text-yellow-500 hover:bg-[#111f38]' 
