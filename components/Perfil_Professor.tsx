@@ -99,7 +99,7 @@ const ProfessorDashboard = () => {
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
             <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
-             Professor. Lucio Luzzeti
+             Cornoooooooooooolllll
             </h2>
 
             {/* Container da Direita com flex-nowrap impede quebras */}
