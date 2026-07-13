@@ -70,11 +70,13 @@ export default function GestoriaIAPage() {
               label="Dashboard"
               onClick={() => router.push("/gestoria")}
             />
-            <NavItem icon={<Bot size={18} />} label="Gestoria IA" active />
+            <NavItem icon={<Bot size={18} />}
+              label="Gestoria IA" active />
+
             <NavItem
-              icon={<ArrowDown size={18} />}
-              label="Fim da página"
-              onClick={scrollToBottom}
+              icon={<LayoutDashboard size={18} />}
+              label="Feed de Atividades"
+              onClick={() => router.push("/gestoria")}
             />
           </nav>
 
@@ -357,8 +359,8 @@ function NavItem({ icon, label, active = false, onClick, textColor }: NavItemPro
     <button
       onClick={onClick}
       className={`flex w-full items-center gap-3 rounded-lg px-4 py-2.5 transition-all text-left ${active
-          ? 'bg-blue-600 font-semibold text-white shadow-sm'
-          : `text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 ${textColor || ''}`
+        ? 'bg-blue-600 font-semibold text-white shadow-sm'
+        : `text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 ${textColor || ''}`
         }`}
     >
       {icon}
