@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   LayoutDashboard, Bot, ArrowDown, LogOut, Sun, Moon,
-  Search, Bell, Settings, Printer, Download
+  Search, Bell, Settings, Printer, Download, Sparkles, Loader2
 } from 'lucide-react';
 
 interface NavItemProps {
@@ -24,6 +24,10 @@ export default function GestoriaIAPage() {
   const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Estados específicos para a IA
+  const [prompt, setPrompt] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   // Efeito do Relógio Digital
   useEffect(() => {
     const atualizarHora = () => {
@@ -40,6 +44,22 @@ export default function GestoriaIAPage() {
         top: scrollContainerRef.current.scrollHeight,
         behavior: 'smooth'
       });
+    }
+  };
+
+  // Função simulada de processamento de comando da IA
+  const processarComandoIA = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!prompt.trim()) return;
+
+    setIsLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setPrompt('');
+    } catch (error) {
+      console.error('Erro ao processar comando da IA:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +96,7 @@ export default function GestoriaIAPage() {
             <NavItem
               icon={<LayoutDashboard size={18} />}
               label="Feed de Atividades"
-              onClick={() => router.push("/gestoria")}
+              onClick={() => router.push("/feed_att")}
             />
           </nav>
 
@@ -312,19 +332,43 @@ export default function GestoriaIAPage() {
                 </div>
               </div>
 
-              {/* Chat da Secretaria IA e Status Inferiores */}
-              <div className="mt-6 space-y-4">
-                <div className="bg-gray-100 dark:bg-gray-800/60 rounded-xl p-2.5 flex items-center gap-3 border border-transparent dark:border-gray-800">
-                  <input
-                    type="text"
-                    placeholder="Pergunte algo à Secretaria IA..."
-                    className="flex-1 bg-transparent outline-none px-3 text-sm text-gray-800 dark:text-white placeholder-gray-400"
-                  />
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-xs font-semibold transition">
-                    Enviar
-                  </button>
-                </div>
+              {/* SEÇÃO DA SECRETARIA IA ATUALIZADA COM O NOVO LAYOUT DO PROMPT */}
+              <div className="mt-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-colors duration-300 dark:border-gray-800 dark:bg-[#161b22]">
+                <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-white">🤖 Assistente da Secretaria IA</div>
+                <form onSubmit={processarComandoIA} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Prompt / Comando para a Secretaria</label>
+                    <div className="relative">
+                      <textarea
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        disabled={isLoading}
+                        rows={4}
+                        placeholder='Ex: "Verifique conflitos para as turmas do Prédio 1 e reorganize as ausências pendentes para a próxima semana."'
+                        className="w-full resize-none rounded-lg border border-gray-200 bg-gray-50 p-4 text-xs leading-relaxed text-gray-800 placeholder-gray-400 transition-colors focus:border-blue-500/50 focus:outline-none disabled:opacity-50 dark:border-gray-800 dark:bg-[#1c2128] dark:text-white dark:placeholder-gray-600"
+                      />
+                      {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center gap-2 rounded-lg bg-white/80 text-xs text-gray-500 dark:bg-[#1c2128]/80 dark:text-gray-400">
+                          <Loader2 size={16} className="animate-spin text-blue-500" />
+                          <span>Sua Secretaria IA está processando as diretrizes...</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={isLoading || !prompt.trim()}
+                      className="flex items-center gap-2 rounded-lg bg-[#0B5ED7] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm transition-colors hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-400 dark:disabled:bg-gray-800"
+                    >
+                      <Sparkles size={14} /> Processar com IA
+                    </button>
+                  </div>
+                </form>
+              </div>
 
+              {/* Status Inferiores */}
+              <div className="mt-6">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-xl p-4">
                     <p className="text-xs text-gray-400">Solicitações IA hoje</p>

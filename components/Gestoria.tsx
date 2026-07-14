@@ -61,17 +61,18 @@ export default function GestoriaPage() {
           </div>
 
           <nav className="flex-1 space-y-1">
-            <NavItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
+            <NavItem icon={<LayoutDashboard size={18} />} 
+            label="Dashboard" active />
+
             <NavItem
               icon={<Bot size={18} />}
               label="Gestoria IA"
-              onClick={() => router.push("/gestoria_ia")}
-            />
+              onClick={() => router.push("/gestoria_ia")}/>
+
             <NavItem
-              icon={<ArrowDown size={18} />}
-              label="Fim da página"
-              onClick={scrollToBottom}
-            />
+              icon={<Bot size={18} />}
+              label="Feed Atividades"
+              onClick={() => router.push("/feed_att")}/>
           </nav>
 
           <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4 text-[11px]">
