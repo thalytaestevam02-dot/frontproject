@@ -1,12 +1,13 @@
 'use client'
 
 import React, {useState} from 'react';
+import { useRouter } from 'next/navigation';
 import { useThemeStorage } from "../lib/useThemeStorage";
 import Image from "next/image";
 import Link from "next/link";
 import {
   User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon,
-  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle
+  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle,Settings
 } from 'lucide-react';
 interface NavItemProps {
   icon: React.ReactNode;
@@ -38,6 +39,7 @@ interface MySubjectProps {
 
 // ================= COMPONENTE PRINCIPAL =================
 const ProfessorDashboard = () => {
+  const router = useRouter();
   const { isDarkMode, toggleTheme } = useThemeStorage();
   return (
     <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
@@ -86,9 +88,11 @@ const ProfessorDashboard = () => {
 
             <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
               <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors">
-                <Headphones size={16} /> <span className="text-sm font-medium">Suporte</span>
+                <Settings size={16} /> <span className="text-sm font-medium">Configurações</span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
+              <div
+              onClick={() => router.push("/cadastro")}
+              className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
                 <LogOut size={16} /> <span className="text-sm font-medium">Sair</span>
               </div>
             </div>
@@ -152,7 +156,7 @@ const ProfessorDashboard = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Lucio Luzzeti</h3>
-                      {/* Teste pra ver se o Push/Pull funcionou !!!!!!!!!!!!!!!! */}
+            
                       <p className="mt-0.5 mb-3 flex items-center gap-1 text-sm font-bold text-[#0052cc] dark:text-blue-400">
                         🔷 Coordenador de Design Digital & UX
                       </p>

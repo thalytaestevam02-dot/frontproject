@@ -86,11 +86,13 @@ export default function Cadastro({ onSelectPerfil }: CadastroProps) {
         .onda-azul-2 { animation: moverOndaDireita 26s infinite ease-in-out; }
       `}</style>
 
-      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-linear-to-br from-blue-600/25 via-cyan-500/15 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
-        isDarkMode ? 'blur-[100px] md:blur-[140px] opacity-100' : 'blur-[80px] md:blur-[110px] opacity-40'
+      <div className={`absolute top-0 left-0 w-[80vmin] h-[80vmin] rounded-full bg-linear-to-br from-blue-600 via-cyan-800 to-transparent pointer-events-none onda-azul-1 transition-all duration-500 ${
+        isDarkMode ? 'blur-[100px] md:blur-[140px] opacity-100' 
+                   : 'blur-[50px] md:blur-[50px] opacity-400'
       }`} />
-      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-linear-to-tl from-indigo-600/20 via-blue-700/10 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
-        isDarkMode ? 'blur-[110px] md:blur-[150px] opacity-100' : 'blur-[90px] md:blur-[120px] opacity-40'
+      <div className={`absolute bottom-0 right-0 w-[90vmin] h-[90vmin] rounded-full bg-linear-to-tl from-indigo-600 via-blue-700 to-transparent pointer-events-none onda-azul-2 transition-all duration-500 ${
+        isDarkMode ? 'blur-[110px] md:blur-[150px] opacity-100'
+                   : 'blur-[50px] md:blur-[50px] opacity-400'
       }`} />
 
       <div className="absolute top-4 right-4 z-50">
