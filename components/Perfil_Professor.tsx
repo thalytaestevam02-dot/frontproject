@@ -1,13 +1,13 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, { useEffect,useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useThemeStorage } from "../lib/useThemeStorage";
 import Image from "next/image";
 import Link from "next/link";
 import {
   User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon,
-  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle,Settings
+  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle, Settings
 } from 'lucide-react';
 interface NavItemProps {
   icon: React.ReactNode;
@@ -41,6 +41,20 @@ interface MySubjectProps {
 const ProfessorDashboard = () => {
   const router = useRouter();
   const { isDarkMode, toggleTheme } = useThemeStorage();
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showEditDescriptionModal, setShowEditDescriptionModal] = useState(false);
+  const [description, setDescription] = useState("Doutor em Interação Humano-Computador com mais de 15 anos de experiência em consultoria para grandes corporações. Lidera o núcleo de Design de Interface do Portal ENIAC."
+  );
+  const [tempDescription, setTempDescription] = useState(description);
+
+  useEffect(() => {
+  const savedDescription = localStorage.getItem("professorDescription");
+
+  if (savedDescription) {
+    setDescription(savedDescription);
+  }
+}, []);
+
   return (
     <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
       <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
@@ -91,8 +105,8 @@ const ProfessorDashboard = () => {
                 <Settings size={16} /> <span className="text-sm font-medium">Configurações</span>
               </div>
               <div
-              onClick={() => router.push("/cadastro")}
-              className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
+                onClick={() => router.push("/cadastro")}
+                className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
                 <LogOut size={16} /> <span className="text-sm font-medium">Sair</span>
               </div>
             </div>
@@ -103,7 +117,7 @@ const ProfessorDashboard = () => {
         <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <header className="flex justify-between items-center mb-6 py-3 px-4 bg-white/80 dark:bg-[#161b22]/80 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-800 gap-4 transition-colors duration-300 shrink-0">
             <h2 className="text-xl font-semibold tracking-wide text-gray-800 dark:text-white shrink-0">
-             Professor. Corno 
+              Professor. Lucio Luzzeti
             </h2>
 
             {/* Container da Direita com flex-nowrap impede quebras */}
@@ -136,7 +150,12 @@ const ProfessorDashboard = () => {
 
               {/* Avatar */}
               <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0">
-                <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
+                <button
+                  onClick={() => setShowProfileModal(true)}
+                  className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0 cursor-pointer"
+                >
+                  <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
+                </button>
               </div>
             </div>
           </header>
@@ -156,7 +175,7 @@ const ProfessorDashboard = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Prof. Lucio Luzzeti</h3>
-            
+
                       <p className="mt-0.5 mb-3 flex items-center gap-1 text-sm font-bold text-[#0052cc] dark:text-blue-400">
                         🔷 Coordenador de Design Digital & UX
                       </p>
@@ -164,7 +183,7 @@ const ProfessorDashboard = () => {
                     <div className="w-8 h-8 bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-300 dark:text-gray-600 text-sm">🛡️</div>
                   </div>
                   <p className="mb-4 text-[15px] leading-relaxed text-gray-500 dark:text-gray-400">
-                    Doutor em Interação Humano-Computador com mais de 15 anos de experiência em consultoria para grandes corporações. Lidera o núcleo de Design de Interface do Portal ENIAC.
+                    {description}
                   </p>
                   <div className="flex gap-2">
                     <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[12px] font-semibold text-blue-700 dark:border-gray-700 dark:bg-[#2d333b] dark:text-gray-300">🎓 Líder Acadêmico</span>
@@ -268,6 +287,103 @@ const ProfessorDashboard = () => {
 
           </div>
         </main>
+        {/* MODAL DO PERFIL */}
+        {showProfileModal && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+            <div className="w-80 rounded-xl bg-white dark:bg-[#161b22] p-6 shadow-2xl">
+
+              <h2 className="text-xl font-bold mb-6">
+                Meu Perfil
+              </h2>
+
+              <button className="w-full mb-3 rounded-lg py-3 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer ">
+                📷 Alterar Foto
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowProfileModal(false);
+                  setTempDescription(description);
+                  setShowEditDescriptionModal(true);
+                }}
+                className="w-full mb-3 rounded-lg border bg-gray-100 dark:bg-gray-700 py-3 hover:bg-gray-200 dark:hover:bg-gray-600 transition cursor-pointer"
+              >
+                📝 Editar Descrição
+              </button>
+
+              <button
+                onClick={() => setShowProfileModal(false)}
+                className="w-full rounded-lg border py-3 cursor-pointer bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                Fechar
+              </button>
+
+            </div>
+
+          </div>
+        )}
+
+        {/* MODAL DE EDIÇÃO DE DESCRIÇÃO */}
+        {showEditDescriptionModal && (
+
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+            <div className="w-[600px] max-w-[95%] bg-white dark:bg-[#161b22] rounded-xl p-6 shadow-2xl">
+
+              <h2 className="text-xl font-bold mb-5">
+                Editar Descrição
+              </h2>
+
+              <textarea
+                value={tempDescription}
+                onChange={(e) => setTempDescription(e.target.value)}
+                rows={8}
+                maxLength={215}
+                className="
+              w-full
+              border
+              rounded-lg
+              p-3
+              resize-none
+              dark:bg-[#1c2128]
+              dark:border-gray-700
+              "
+              />
+              <div className="mt-2 text-right text-sm text-gray-500 dark:text-gray-400">
+                {tempDescription.length}/215 caracteres
+              </div>
+
+              <div className="flex justify-end gap-3 mt-6">
+
+                <button
+                  onClick={() => setShowEditDescriptionModal(false)}
+                  className="px-5 py-2 rounded-lg border hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  onClick={() => {
+                    setDescription(tempDescription);
+                    localStorage.setItem(
+                    "professorDescription",
+                    tempDescription
+                    );
+                    setShowEditDescriptionModal(false);
+                  }}
+                  className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                >
+                  Salvar
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
       </div>
     </div>
   );
@@ -325,8 +441,8 @@ const ClassSchedule = ({ subject, time, room, type }: ClassScheduleProps) => (
 // ================= SUBCOMPONENTES AUXILIARES OTIMIZADOS =================
 const NavItem = ({ icon, label, active = false }: NavItemProps) => (
   <div className={`flex items-center gap-3 px-4 py-2.5 rounded-lg cursor-pointer transition-all w-full ${active
-      ? 'bg-blue-50 dark:bg-blue-500/10 text-[#0052cc] dark:text-blue-400 font-semibold'
-      : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'
+    ? 'bg-blue-50 dark:bg-blue-500/10 text-[#0052cc] dark:text-blue-400 font-semibold'
+    : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400'
     }`}>
     {icon}
     <span className="text-sm font-medium">{label}</span>
