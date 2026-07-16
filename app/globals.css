@@ -150,16 +150,3 @@ body {
 }
 
 
-.sidebar-button {
-  padding: 12px 16px;
-  border-radius: 10px;
-  text-align: left;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.sidebar-button:hover {
-  background: linear-gradient(to right, #1e3a8a, #3b82f6);
-  color: white;
-  transform: translateX(5px);
-}

@@ -14,6 +14,7 @@ import {
   Search,
   Settings,
   Sun,
+  CalendarDays,
 } from 'lucide-react';
 
 interface NavItemProps {
@@ -70,7 +71,7 @@ export default function GestoriaPage() {
               onClick={() => router.push("/gestoria_ia")}/>
 
             <NavItem
-              icon={<Bot size={18} />}
+              icon={<CalendarDays  size={18} />}
               label="Feed Atividades"
               onClick={() => router.push("/feed_att")}/>
           </nav>
