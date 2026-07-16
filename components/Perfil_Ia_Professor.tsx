@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import React, {useState} from 'react';
+import { useRouter } from 'next/navigation';
 import { useThemeStorage } from "../lib/useThemeStorage";
 import Image from 'next/image';
 import Link from 'next/link';
@@ -79,6 +80,7 @@ interface NavItemProps {
 }
 
 export default function GeradorGradeIA() {
+  const router = useRouter();
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { isDarkMode, toggleTheme } = useThemeStorage();
@@ -174,9 +176,11 @@ export default function GeradorGradeIA() {
 
             <div className="pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1">
               <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white transition-colors">
-                <Headphones size={16} /> <span className="text-sm font-medium">Suporte</span>
+                <Settings size={16} /> <span className="text-sm font-medium">Configurações</span>
               </div>
-              <div className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
+              <div 
+              onClick={() => router.push("/cadastro")}
+              className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 rounded-lg cursor-pointer transition-colors">
                 <LogOut size={16} /> <span className="text-sm font-medium">Sair</span>
               </div>
             </div>
