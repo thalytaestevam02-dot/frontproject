@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useThemeStorage } from "../lib/useThemeStorage";
+import { useProfile } from "../lib/ProfileContext";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -41,22 +42,56 @@ interface MySubjectProps {
 const ProfessorDashboard = () => {
   const router = useRouter();
   const { isDarkMode, toggleTheme } = useThemeStorage();
+
+  const {
+    profileImage,
+    setProfileImage,
+    description,
+    setDescription,
+    isLoaded,
+  } = useProfile();
+
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showEditDescriptionModal, setShowEditDescriptionModal] = useState(false);
-  const [description, setDescription] = useState("Doutor em Interação Humano-Computador com mais de 15 anos de experiência em consultoria para grandes corporações. Lidera o núcleo de Design de Interface do Portal ENIAC."
-  );
   const [tempDescription, setTempDescription] = useState(description);
 
-  useEffect(() => {
-  const savedDescription = localStorage.getItem("professorDescription");
 
-  if (savedDescription) {
-    setDescription(savedDescription);
-  }
-}, []);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const openFileSelector = () => { fileInputRef.current?.click(); };
+  const handleImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setProfileImage(reader.result);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  if (!isLoaded) {
+  return null;
+}
 
   return (
     <div className={`${isDarkMode ? 'dark bg-[#0f1115] text-gray-300' : 'bg-gray-300 text-gray-700'} h-screen overflow-hidden font-sans p-6 transition-colors duration-300`}>
+
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        onChange={handleImageChange}
+        className="hidden"
+      />
+
       <div className="mx-auto flex h-full max-w-[1400px] gap-6 min-h-0">
 
         {/* BARRA LATERAL (SIDEBAR) */}
@@ -154,7 +189,7 @@ const ProfessorDashboard = () => {
                   onClick={() => setShowProfileModal(true)}
                   className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0 cursor-pointer"
                 >
-                  <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
+                  <img src={profileImage} alt="Avatar" className="w-full h-full object-cover" />
                 </button>
               </div>
             </div>
@@ -169,7 +204,7 @@ const ProfessorDashboard = () => {
               {/* CARD DE PERFIL */}
               <section className="bg-white dark:bg-[#161b22] border border-gray-200/80 dark:border-gray-800 rounded-xl p-6 flex gap-6 shadow-sm dark:shadow-none transition-colors duration-300">
                 <div className="w-24 h-24 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shrink-0">
-                  <img src="/professor1.jpeg" alt="Professor" className="w-full h-full object-cover" />
+                  <img src={profileImage} alt="Professor" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
@@ -297,7 +332,10 @@ const ProfessorDashboard = () => {
                 Meu Perfil
               </h2>
 
-              <button className="w-full mb-3 rounded-lg py-3 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer ">
+              <button
+                onClick={openFileSelector}
+                className="w-full mb-3 rounded-lg py-3 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer ">
+
                 📷 Alterar Foto
               </button>
 
@@ -366,10 +404,6 @@ const ProfessorDashboard = () => {
                 <button
                   onClick={() => {
                     setDescription(tempDescription);
-                    localStorage.setItem(
-                    "professorDescription",
-                    tempDescription
-                    );
                     setShowEditDescriptionModal(false);
                   }}
                   className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
@@ -433,7 +467,7 @@ const ClassSchedule = ({ subject, time, room, type }: ClassScheduleProps) => (
       </div>
     </div>
     <button className="text-xs font-bold text-gray-400 hover:text-gray-600 dark:hover:text-white px-3 py-1 bg-white dark:bg-[#2d333b] border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm transition-all">
-      {type === 'Presencial' ? 'Fazer Chamada' : 'Entrar na Sala'}
+      {type === 'Presencial' ? 'Entrar na Sala' : 'Entrar na Sala'}
     </button>
   </div>
 );
