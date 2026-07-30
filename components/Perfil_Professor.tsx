@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   User, BookOpen, Bell, Plus, Headphones, LogOut, Bot, Sun, Moon,
-  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle, Settings
+  LayoutDashboard, FileText, GraduationCap, Search, Calendar, MapPin, Clock, Users, AlertTriangle, Settings, X
 } from 'lucide-react';
 interface NavItemProps {
   icon: React.ReactNode;
@@ -328,9 +328,19 @@ const ProfessorDashboard = () => {
 
             <div className="w-80 rounded-xl bg-white dark:bg-[#161b22] p-6 shadow-2xl">
 
-              <h2 className="text-xl font-bold mb-6">
+              <div className="flex items-center justify-between mb-6">
+
+              <h2 className="text-xl font-bold mb-2">
                 Meu Perfil
               </h2>
+
+               <button
+              onClick={() => setShowProfileModal(false)}
+              className=" p-2 rounded-lg hover:bg-red-500 transition cursor-pointer">
+              <X size={20} />
+              </button>
+
+      </div>
 
               <button
                 onClick={openFileSelector}
@@ -348,13 +358,6 @@ const ProfessorDashboard = () => {
                 className="w-full mb-3 rounded-lg border bg-gray-100 dark:bg-gray-700 py-3 hover:bg-gray-200 dark:hover:bg-gray-600 transition cursor-pointer"
               >
                 📝 Editar Descrição
-              </button>
-
-              <button
-                onClick={() => setShowProfileModal(false)}
-                className="w-full rounded-lg border py-3 cursor-pointer bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                Fechar
               </button>
 
             </div>
@@ -378,16 +381,9 @@ const ProfessorDashboard = () => {
                 onChange={(e) => setTempDescription(e.target.value)}
                 rows={8}
                 maxLength={215}
-                className="
-              w-full
-              border
-              rounded-lg
-              p-3
-              resize-none
-              dark:bg-[#1c2128]
-              dark:border-gray-700
-              "
+                className="w-full border rounded-lg p-3 resize-none dark:bg-[#1c2128] dark:border-gray-700"                                                                                            
               />
+              
               <div className="mt-2 text-right text-sm text-gray-500 dark:text-gray-400">
                 {tempDescription.length}/215 caracteres
               </div>

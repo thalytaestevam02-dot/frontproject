@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import { useRouter } from 'next/navigation';
 import { useThemeStorage } from "../lib/useThemeStorage";
+import { useProfile } from "../lib/ProfileContext";
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -83,7 +84,11 @@ export default function GeradorGradeIA() {
   const router = useRouter();
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
   const { isDarkMode, toggleTheme } = useThemeStorage();
+  console.log("Tema atual:", isDarkMode);
+
+  const { profileImage } = useProfile();
 
   const [gradeGerada, setGradeGerada] = useState<GradeSemanal>({
     carga: '24h',
@@ -224,7 +229,7 @@ export default function GeradorGradeIA() {
 
               {/* Avatar */}
               <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 dark:border-gray-700 shrink-0">
-                <img src="/professor1.jpeg" alt="Avatar" className="w-full h-full object-cover" />
+                <img src={profileImage} alt="Avatar" className="w-full h-full object-cover" />
               </div>
             </div>
           </header>
